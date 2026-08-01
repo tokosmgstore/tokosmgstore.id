@@ -3,7 +3,7 @@ const DAFTAR = [
   // FREE FIRE
   "BR MODS|ff",
   "LK TEAM|ff",
-  "DRIP CLIENT|ff",
+  "|ff",
   "PATO TEAM|ff",
   "SILENT NO ROOT|ff",
   "SILENT ROOT|ff",
