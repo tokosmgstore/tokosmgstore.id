@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN AREA RESELLER - SMG STORE</title>
+  <style>
+    * {box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif;}
+    body {
+      background: #1a2440;
+      color: #ffffff;
+      padding: 20px 15px;
+      min-height: 100vh;
+    }
+
+    .kotak-login {
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255,255,255,0.05);
+      padding: 30px 25px;
+      border-radius: 12px;
+      border: 2px solid #ffcc00;
+      margin: 0 auto 30px auto;
+    }
+
+    .judul {
+      text-align: center;
+      color: #ffcc00;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      text-align: center;
+      font-size: 13px;
+      color: #cccccc;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .input-kunci {
+      width: 100%;
+      padding: 14px 12px;
+      border-radius: 8px;
+      border: 1px solid #445588;
+      background: #253359;
+      color: #ffffff;
+      font-size: 15px;
+      margin-bottom: 15px;
+      outline: none;
+    }
+    .input-kunci::placeholder {color: #8899bb;}
+    .input-kunci:focus {border-color: #ffcc00;}
+
+    .tombol-masuk {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffd54f, #ffb300);
+      color: #000000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tombol-masuk:hover {transform: translateY(-1px);}
+    .tombol-masuk:active {transform: scale(0.98);}
+
+    .pesan {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+    .pesan.salah {background: rgba(255,70,70,0.15); color: #ff9999; border: 1px solid #ff4444;}
+    .pesan.sukses {background: rgba(70,255,120,0.15); color: #99ffaa; border: 1px solid #44ff66;}
+  </style>
+</head>
+<body>
+
+<div class="kotak-login">
+  <h2 class="judul">🔑 AREA RESELLER</h2>
+  <p class="info">Masukkan kunci akses yang diberikan admin<br>Jangan bagikan kunci ini ke pihak lain</p>
+
+  <input type="password" id="kunciAkses" class="input-kunci" placeholder="Masukkan Kunci Akses Kamu" autocomplete="off">
+  <button class="tombol-masuk" onclick="cekLogin()">✅ MASUK</button>
+  <div id="notifSistem" class="pesan"></div>
+</div>
+
+<!-- ======================================================
+    KOTAK PALING LEBAR, HAMPIR SENTUH TEPI LAYAR HP
+    ISI & POSISI TETAP SAMA PERSIS
+====================================================== -->
+<div style="width:98%; max-width:100%; margin:0 auto 0 auto; padding:18px 12px; background:rgba(255,255,255,0.05); border-radius:12px; border:1px solid rgba(255,255,255,0.1); box-sizing:border-box; font-family:Arial, sans-serif;">
+
+  <!-- ✅ TOMBOL WA & TELEGRAM: LOGO JELAS, KOTAK LEBIH KECIL, MUDAH DIGANTI -->
+<div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:15px;">
+  <!-- TOMBOL WHATSAPP -->
+  <a href="https://wa.me/6281365013694" target="_blank" style="display:inline-flex; align-items:center; gap:5px; padding:7px 14px; background:#25d366; color:#fff; text-decoration:none; border-radius:20px; font-size:12px; font-weight:bold;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+    </svg>
+    WhatsApp
+  </a>
+
+  <!-- TOMBOL TELEGRAM -->
+  <a href="https://t.me/ST_MD_Hasan" target="_blank" style="display:inline-flex; align-items:center; gap:5px; padding:7px 14px; background:#0088cc; color:#fff; text-decoration:none; border-radius:20px; font-size:12px; font-weight:bold;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+    </svg>
+    Telegram
+  </a>
+</div>
+
+  <h2 style="color:#ffc000; margin:0 0 10px 0; font-size:20px; font-weight:bold; text-align:center;">RESELLER RESMI SMG STORE</h2>
+  <p style="color:#ccc; margin:0 0 12px 0; font-size:13px; text-align:center;">Dapat Akses Login Web & Harga Khusus Reseller!</p>
+
+  <p style="color:#ddd; margin:0 0 15px 0; font-size:12px; line-height:1.5; text-align:center;">Mau jual Voucher Top Up Game dengan Untung besar tapi Modal Kecil? Langsung Join sekarang, Hubungi admin Melalui Telegram / WhatsApp di atas </strong></p>
+
+  <div style="padding:12px; background:rgba(0,0,0,0.2); border-radius:8px; margin-bottom:15px;">
+    <h4 style="margin:0 0 8px 0; color:#ffc000; font-size:14px;">💸 BIAYA PENDAFTARAN</h4>
+    <p style="margin:0 0 5px 0; color:#fff; font-size:13px;">Cukup bayar <strong>SEKALI SAJA Rp 150.000</strong></p>
+    <ul style="margin:0; padding-left:20px; color:#bbb; font-size:12px; line-height:1.6;">
+      <li>Tidak ada biaya bulanan / tahunan selamanya</li>
+      <li>Investasi sekali, bisa dipakai cari uang terus-menerus!</li>
+    </ul>
+  </div>
+
+  <h4 style="color:#ffc000; margin:0 0 8px 0; font-size:14px; text-align:left;">📝 CARA DAFTAR AKSES LOGIN WEB RESELLER</h4>
+  <p style="margin:0 0 8px 0; color:#ddd; font-size:12px; text-align:left;">Sangat gampang & aman:</p>
+  <ol style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>Hubungi Admin sampaikan niat mau gabung Reseller</li>
+    <li>Admin berikan Nomor tujuan Pembayaran resmi</li>
+    <li>Lakukan Pembayaran sesuai nominal di atas</li>
+    <li>Kirim bukti Pembayaran yang jelas ke Admin</li>
+    <li>✅ <strong>SETELAH DIVERIFIKASI:</strong> Admin akan langsung berikan Sandi Rahasia khusus Reseller Web untuk kamu!</li>
+    <li>Klik Tombol Join Reseller yang ada di halaman utama, login pakai sandi yang diberikan, dan lihat harga khusus reseller yang terkunci sebelumnya!</li>
+  </ol>
+
+  <h4 style="color:#ffc000; margin:0 0 8px 0; font-size:14px; text-align:left;">🔐 FITUR KHUSUS SETELAH LOGIN</h4>
+  <ul style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>🔥 <strong>Harga VIP Terbuka:</strong> Lihat harga modal khusus yang tidak bisa dilihat pembeli biasa!</li>
+    <li>🔥 <strong>Aman & Eksklusif:</strong> Hanya kamu yang pegang sandi aksesnya, jangan dibagikan ya!</li>
+    <li>🔥 <strong>Update Harga Otomatis:</strong> Harga & Stok ketersediaan berubah otomatis di halaman Web Reseller, jadi pastikan Order di Web Reseller agar selalu sesuai dengan Harga Reseller !</li>
+    <li>🔥 <strong>Mudah Diakses:</strong> Bisa dibuka kapan saja lewat HP atau komputer!</li>
+  </ul>
+
+  <h4 style="color:#ffc000; margin:0 0 8px 0; font-size:14px; text-align:left;">🎁 KEUNTUNGAN JADI RESELLER SMG STORE</h4>
+  <ul style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>✅ Untung lebih besar karena dapat harga paling murah</li>
+    <li>✅ Tidak perlu modal besar, Tidak perlu stok barang, kami yang siapkan semua</li>
+    <li>✅ Bisa jual semua Voucher Game yang tersedia di halaman utama: Game: Free Fire, MLBB, PUBG, CODM, Delta Force, dll</li>
+    <li>✅ Selalu Dapat Update Terbaru dari Admin</li>
+    <li>✅ Pelayanan prioritas dari Admin!</li>
+  </ul>
+
+  <div style="padding:10px; background:rgba(255,192,0,0.1); border-radius:6px; border-left:3px solid #ffc000; margin-bottom:15px;">
+    <h4 style="margin:0 0 6px 0; color:#ffc000; font-size:13px;">⚠️ SYARAT SIMPEL YANG HARAP DIPATUHI</h4>
+    <ul style="margin:0; padding-left:18px; color:#ccc; font-size:11px; line-height:1.6;">
+      <li>Wajib aktif berjualan minimal 3 kali Transaksi dalam 1 bulan</li>
+      <li>Jika 1 bulan penuh tidak ada aktivitas, akses login & harga khusus akan dinonaktifkan sementara</li>
+      <li>Bisa diaktifkan kembali kapan saja dengan Syarat yang sudah ditentukan Admin</li>
+      <li>Dilarang keras menyebarkan sandi login & daftar harga ke orang lain</li>
+      <li>Dilarang menjual di bawah harga batas minimal yang ditentukan</li>
+    </ul>
+  </div>
+
+  <p style="margin:0 0 10px 0; color:#fff; font-size:13px; text-align:center;">💬 MULAI BISNIS MU SEKARANG!</p>
+  <p style="margin:0; color:#ddd; font-size:12px; line-height:1.5; text-align:center;">Cuma Rp 150.000 sekali bayar, kamu sudah punya akses harga khusus yang bisa dipakai cari uang ratusan ribu bahkan jutaan rupiah! Jangan sampai kehabisan kuota mitra ya! 😉</p>
+</div>
+
+<!-- ======================================================
+    INFO KHUSUS RESELLER PANEL - TETAP UTUH SEMUA
+====================================================== -->
+<div style="width:98%; max-width:100%; margin:30px auto 0 auto; padding:18px 12px; background:rgba(255,255,255,0.05); border-radius:12px; border:1px solid rgba(0,191,255,0.35); box-sizing:border-box; font-family:Arial, sans-serif;">
+
+  <h2 style="color:#00bfff; margin:0 0 10px 0; font-size:20px; font-weight:bold; text-align:center;">⚙️ INFO KHUSU RESELLER PANEL</h2>
+  <p style="color:#ccc; margin:0 0 15px 0; font-size:13px; text-align:center;">Buat & Kelola Sendiri Voucher Akses di Panel</p>
+
+  <div style="padding:12px; background:rgba(0,0,0,0.2); border-radius:8px; margin-bottom:10px;">
+    <h4 style="margin:0 0 8px 0; color:#00bfff; font-size:13px;">💳 CARA PUNYA PANEL UNTUK MEMBUAT VOUCHER</h4>
+    <ul style="margin:0; padding-left:20px; color:#ddd; font-size:12px; line-height:1.6;">
+      <li>❌ <strong>TIDAK ADA BIAYA PENDAFTARAN TAMBAHAN</strong></li>
+      <li>✅ Butuh Modal Awal <strong>Paling bawahnya 1 Juta</strong></li>
+      <li>✅ Setiap Brand/Merek punya Penal berbedah <strong>untuk membuat Voucher</strong></li>
+      <li>✅ Cukup bayar <strong>HARGA PANEL YANG SUDAH DITENTUKAN</strong></li>
+      <li>✅ Setelah dikonfirmasi: Langsung diberikan <strong>Alat Pembuat Voucher di Panel</strong></li>
+      <li>✅ Wajib isi Saldo Panel Minimal 1x dalam 1 Bulan agar Panel terdeteksi ada aktifitasnya</li>
+      <li>✅ Panel tidak ada aktifitas dalam 1 bulan di nonaktfkan sementara, akan aktif saat panel di isi ulang</li>
+    </ul>
+  </div>
+
+  <h4 style="color:#ffc000; margin:0 0 8px 0; font-size:14px; text-align:left;">💸 PERBEDAAN & KEUNTUNGAN UTAMA</h4>
+  <div style="padding:10px; background:rgba(255,192,0,0.1); border-radius:6px; border-left:3px solid #ffc000; margin-bottom:15px;">
+    <p style="margin:0 0 8px 0; color:#fff; font-size:13px; font-weight:bold;">✅ HARGA LEBIH MURAH JAUH!</p>
+    <p style="margin:0; color:#ddd; font-size:12px; line-height:1.6;">Harga dasar untuk membuat kunci akses di sini <strong>BERBEDA & JAUH LEBIH RENDAH</strong> dibandingkan harga yang tertera di halaman Web Reseller biasa di atas. Keuntungan yang kamu dapat pasti lebih besar!</p>
+  </div>
+
+  <h4 style="color:#00bfff; margin:0 0 8px 0; font-size:14px; text-align:left;">🔥 KEUNTUNGAN LAINNYA MEMEGANG PANEL</h4>
+  <ul style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>✅ Bisa tentukan sendiri harga jual kunci ke orang lain sesuai keuntungan yang kamu inginkan</li>
+    <li>✅ Bebas buat kunci akses untuk tim, teman, atau mitra jualanmu</li>
+    <li>✅ Atur sendiri masa berlaku kunci: harian, mingguan, bulanan</li>
+    <li>✅ Bisa matikan/hapus/reset sendiri kunci kapan saja</li>
+    <li>✅ Lihat riwayat kunci yang dibuat</li>
+    <li>✅ Dapat info update terbaru sistem lebih dulu</li>
+  </ul>
+
+  <h4 style="color:#00bfff; margin:0 0 8px 0; font-size:14px; text-align:left;">💵 ATURAN SALDO</h4>
+  <ul style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>⚠️ <strong>WAJIB ISI SALDO PANEL</strong> setiap 1x dalam 1 bulan ATAU saat saldo PANEL sudah habis</li>
+    <li>Tidak bisa membuat Voucher baru di Panel jika saldo kosong</li>
+    <li>Hubungi Admin setiap Isi saldo Panel</li>
+  </ul>
+
+  <h4 style="color:#00bfff; margin:0 0 8px 0; font-size:14px; text-align:left;">📋 ATURAN WAJIB DIPATUHI</h4>
+  <ul style="margin:0 0 15px 0; padding-left:22px; color:#ddd; font-size:12px; line-height:1.7; text-align:left;">
+    <li>🔒 Wajib jaga kerahasiaan data alat pembuat Voucher, dilarang dibagikan ke sembarang orang</li>
+    <li>⚠️ <strong>DILARANG KERAS MENJUAL VOUCHER AKSES  GAME DI BAWAH HARGA PUBLIKL YANG DITETAPKAN</strong> – agar harga tetap stabil dan tidak merugikan sesama mitra</li>
+    <li>🔒 Kalau memaksa menjual Voucher Akses Game di bawa harga publik, akses Panel dinonaktfikan tanpa pengembalian dana sepersenpun</li>
+    <li>🔒 Segera lapor ke Admin jika ada Voucher yang disalahgunakan atau ada kendala sistem</li>
+  </ul>
+
+  <div style="padding:10px; background:rgba(0,191,255,0.1); border-radius:6px; border-left:3px solid #00bfff; margin-bottom:15px;">
+    <h4 style="margin:0 0 6px 0; color:#00bfff; font-size:13px;">⚠️ SANKSI PELANGGARAN</h4>
+    <ul style="margin:0; padding-left:18px; color:#ccc; font-size:11px; line-height:1.6;">
+      <li>Semua Aturan yang tertulis diatas berlaku untuk semua Reseller Web dan Reseller Panel</li>
+      <li>Hak Reseler Web dan Reseler Panel akan di nonaktifkan jika melanggar Aturan</li>
+      <li>Pencabutan hak akses permanen tanpa pengembalian dana jika merugikan</li>
+    </ul>
+  </div>
+
+  <p style="margin:15px 0 0 0; color:#888; font-size:11px; text-align:center;">SMG STORE – Bisnis Resmi, Akses Aman, Untung Nyata!</p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script>
+const config = {
+  apiKey: "AIzaSyB4-Z-Eto-ZEWgSFALDeGfG1qQr0MHI",
+  authDomain: "smg-store-ef660.firebaseapp.com",
+  databaseURL: "https://smg-store-ef660-default-rtdb.firebaseio.com",
+  projectId: "smg-store-ef660",
+  storageBucket: "smg-store-ef660.appspot.com",
+  messagingSenderId: "61740593036",
+  appId: "1:61740593036:web:beb8903712c2c3750e89421"
+};
+firebase.initializeApp(config);
+const db = firebase.database();
+
+// Buat kode unik perangkat otomatis
+const ID_PERANGKIT = bikinIdUnik();
+function bikinIdUnik(){
+  let nav = navigator.userAgent + screen.width + screen.height + new Date().getTimezoneOffset();
+  let hash = 0;
+  for(let i=0; i<nav.length; i++) hash = ((hash << 5) - hash) + nav.charCodeAt(i), hash |= 0;
+  return 'dev_' + Math.abs(hash).toString(16);
+}
+
+async function cekLogin() {
+  const input = document.getElementById("kunciAkses").value.trim();
+  const notif = document.getElementById("notifSistem");
+  notif.style.display = "none";
+
+  if (!input) {
+    notif.textContent = "⚠️ Masukkan kunci dulu!";
+    notif.className = "pesan salah";
+    notif.style.display = "block";
+    return;
+  }
+
+  const cek = await db.ref("kunci_reseller").orderByChild("sandi").equalTo(input).once("value");
+  
+  if (!cek.exists()) {
+    notif.textContent = "❌ Kunci salah atau tidak terdaftar!";
+    notif.className = "pesan salah";
+    notif.style.display = "block";
+    return;
+  }
+
+  let namaKunci = null, dataKunci = null;
+  cek.forEach(item => { namaKunci = item.key; dataKunci = item.val(); });
+
+  // === LOGIKA BATASAN PERANGKIT ===
+  if (!dataKunci.id_perangkat) {
+    // Belum ada perangkat: simpan perangkat ini
+    await db.ref("kunci_reseller/" + namaKunci).update({
+      id_perangkat: ID_PERANGKIT,
+      terakhir_login: Date.now()
+    });
+    lanjutMasuk();
+  } 
+  else if (dataKunci.id_perangkat === ID_PERANGKIT) {
+    // Perangkat sama: boleh masuk
+    lanjutMasuk();
+  } 
+  else {
+    // Perangkat beda: tolak total
+    notif.textContent = "❌ DITOLAK! Kunci ini SUDAH DIPAKAI di HP/Browser lain!\nMinta admin klik RESET PERANGKIT dulu.";
+    notif.className = "pesan salah";
+    notif.style.display = "block";
+  }
+
+  function lanjutMasuk(){
+    notif.textContent = "✅ Berhasil masuk!";
+    notif.className = "pesan sukses";
+    notif.style.display = "block";
+    localStorage.setItem("kunciAkses", input);
+    localStorage.setItem("sandiReseller", input);
+    setTimeout(() => window.location.href = "harga_reseller.html", 1000);
+  }
+}
+
+// Bisa tekan Enter untuk login
+document.getElementById("kunciAkses").addEventListener("keypress", function(e){
+  if(e.key === "Enter") cekLogin();
+});
+</script>
+
+</body>
+</html>

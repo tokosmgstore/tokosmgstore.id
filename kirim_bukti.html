@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Konfirmasi Pesanan</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+html {scroll-behavior:smooth;}
+
+body {
+  min-height:100vh; padding:25px 15px;
+  /* ✅ LATAR BELAKANG MERAH GELAP MEWAH + KILAU EMAS */
+  background: linear-gradient(180deg, #2b0505 0%, #5a1212 50%, #2b0505 100%);
+  color:#fff;
+  display:flex; flex-direction:column; align-items:center;
+  position: relative;
+}
+
+/* ✅ EFEK KILAU EMAS DI SELURUH LATAR */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.judul-utama {
+  text-align:center; margin-bottom:10px; width:100%; max-width:340px;
+  position: relative; z-index: 1;
+}
+.judul-utama h1 {
+  font-size:20px; font-weight:900; color:#FFD700;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  white-space:nowrap;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6), 0 0 15px rgba(255, 215, 0, 0.3);
+}
+.judul-utama p {
+  font-size:13px; margin-top:4px; color:#FFCCCC; white-space:nowrap;
+  text-shadow: 0 0 4px rgba(255, 200, 200, 0.3);
+}
+
+.kotak-rincian {
+  width:100%; max-width:340px; padding:15px; border-radius:10px;
+  background:rgba(255,255,255,0.12);
+  border:2px solid rgba(255,215,0,0.5);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.25), inset 0 0 8px rgba(255, 215, 0, 0.1);
+  position: relative; z-index: 1;
+}
+.judul-rincian {
+  display:flex; align-items:center; gap:5px; margin-bottom:12px; padding-bottom:8px;
+  border-bottom:1px solid rgba(255,215,0,0.4);
+  font-size:16px; color:#00FF99; font-weight:bold;
+  text-shadow: 0 0 5px rgba(0, 255, 153, 0.4);
+}
+
+.baris {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.2);
+  font-size:14px;
+}
+.baris span:first-child {color:#FFDDDD;}
+.baris span:last-child {color:#FFFFFF; font-weight:bold; text-shadow: 0 0 4px rgba(255,255,255,0.3);}
+.baris:last-child {border-bottom:none;}
+.baris.total {
+  border-top:1px solid rgba(255,215,0,0.5); color:#FFD700; font-weight:bold; font-size:16px;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
+.info-bank {
+  margin-top:15px; padding-top:12px; border-top:1px solid rgba(255,215,0,0.4);
+  display:none;
+}
+.info-bank h4 {
+  font-size:15px; color:#FFD700; margin-bottom:8px;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+.info-bank p {font-size:13px; color:#FFEEEE; margin:4px 0;}
+
+.keterangan-bawah {
+  text-align:center; margin:15px 0 10px 0; font-size:14px; width:100%; max-width:340px;
+  color:#FFCCCC; position: relative; z-index: 1;
+}
+
+.tombol-bungkus {
+  width:100%; max-width:340px; display:flex; gap:12px; justify-content:center; flex-wrap:nowrap;
+  position: relative; z-index: 1;
+}
+.tombol {
+  flex:1; min-width:0; padding:10px 6px; border-radius:8px; text-decoration:none;
+  display:flex; align-items:center; justify-content:center; gap:6px; font-weight:bold; font-size:14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.tombol.wa {
+  background: linear-gradient(135deg, #25D366, #128c7e); color:#fff;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
+}
+.tombol.tg {
+  background: linear-gradient(135deg, #0088CC, #006699); color:#fff;
+  box-shadow: 0 0 12px rgba(0, 136, 204, 0.4);
+}
+.tombol:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.5);
+}
+.icon {width:18px; height:18px; flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div class="judul-utama">
+  <h1>TERIMA KASIH SUDAH ORDER</h1>
+  <p>Berikut detail pesanan kamu:</p>
+</div>
+
+<div class="kotak-rincian">
+  <div class="judul-rincian">RINCIAN PESANAN</div>
+
+  <div class="baris"><span>Nama Game</span><span id="game">-</span></div>
+  <div class="baris"><span>Nama Barang</span><span id="nm">-</span></div>
+  <div class="baris"><span>Durasi</span><span id="dr">-</span></div>
+  <div class="baris"><span>Metode Bayar</span><span id="mp">-</span></div>
+  <div class="baris total"><span>Total Bayar</span><span id="total">-</span></div>
+
+  <div class="info-bank" id="infoTransfer">
+    <h4 id="namaBank">🏦 TUJUAN PEMBAYARAN</h4>
+    <p id="detailBank"></p>
+  </div>
+</div>
+
+<div class="keterangan-bawah">Kirim bukti ke Admin:</div>
+
+<div class="tombol-bungkus">
+  <a href="#" class="tombol wa" id="linkWA">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png" class="icon" alt="WA"> WhatsApp
+  </a>
+  <a href="#" class="tombol tg" id="linkTG">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" class="icon" alt="TG"> Telegram
+  </a>
+</div>
+
+<script>
+// DATA REKENING SUDAH DIPERLUAS AGAR PASTI COCOK
+const DATA_REK = {
+  "QRIS": {nama:"📱 QRIS SEMUA APLIKASI", info:"Scan kode QRIS di halaman sebelumnya"},
+  "DANA": {nama:"💸 DANA", info:"Nomor: <strong>083861606769</strong> a.n <strong>MELDANIATI</strong>"},
+  "SEA BANK": {nama:"🏦 SEA BANK", info:"Nomor: <strong>901462231296</strong> a.n <strong>ASAN BASRI</strong>"},
+  "SEABANK": {nama:"🏦 SEA BANK", info:"Nomor: <strong>901462231296</strong> a.n <strong>ASAN BASRI</strong>"},
+  "SHOPEEPAY": {nama:"🛒 SHOPEEPAY", info:"Nomor: <strong>085172372605</strong> a.n <strong>ASAN BASRI</strong>"},
+  "BINANCE": {nama:"💎 BINANCE", info:"ID: <strong>275182393</strong> a.n <strong>MELDANIATI</strong>"}
+};
+
+// AMBIL DATA DARI LINK
+const urlParams = new URLSearchParams(window.location.search);
+const game = urlParams.get('game') || '-';
+const barang = urlParams.get('barang') || '-';
+const durasi = urlParams.get('durasi') || '-';
+const metode = (urlParams.get('metode_bayar') || '').trim().toUpperCase();
+const total = urlParams.get('total_bayar') || '-';
+
+// TAMPILKAN DATA
+document.getElementById('game').textContent = game;
+document.getElementById('nm').textContent = barang;
+document.getElementById('dr').textContent = durasi;
+document.getElementById('mp').textContent = metode;
+document.getElementById('total').textContent = total;
+
+// COCOKKAN METODE PEMBAYARAN
+const infoTransfer = document.getElementById('infoTransfer');
+let ditemukan = false;
+
+for(let kunci in DATA_REK) {
+  if(metode.includes(kunci) || kunci.includes(metode)) {
+    document.getElementById('namaBank').textContent = DATA_REK[kunci].nama;
+    document.getElementById('detailBank').innerHTML = DATA_REK[kunci].info;
+    infoTransfer.style.display = 'block';
+    ditemukan = true;
+    break;
+  }
+}
+
+if(!ditemukan) infoTransfer.style.display = 'none';
+
+// LINK KONTAK DAN PESAN PERSIS SESUAI RINCIAN
+const noWA = '6281365013694';
+const userTG = 'ST_MD_Hasan';
+const pesan = `Halo Admin SMG Store saya Pesan
+Nama Game: ${game}
+Nama Barang: ${barang}
+Durasi: ${durasi}
+Metode Bayar: ${metode}
+Total Bayar: ${total}
+
+Saya sudah transfer sesuai nominal, mohon dicek ya. Bukti transfer saya kirim menyusul! Terima kasih!`;
+
+document.getElementById('linkWA').href = `https://wa.me/${noWA}?text=${encodeURIComponent(pesan)}`;
+document.getElementById('linkTG').href = `https://t.me/${userTG}?text=${encodeURIComponent(pesan)}`;
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Konfirmasi Pesanan - SMG STORE</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+body {
+  background:#5538B2;
+  min-height:100vh;
+  padding:15px 15px 20px 15px;
+  color:#fff;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+.kotak-utama {
+  max-width:380px;
+  width:100%;
+  background:rgba(255,255,255,0.05);
+  border-radius:8px;
+  padding:20px 15px;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.judul {text-align:center; margin-bottom:18px;}
+.judul h2 {font-size:17px; color:#ffeb3b; margin-bottom:5px;}
+.judul p {font-size:12px; color:#ddd;}
+
+.detail-pesanan {background:rgba(0,0,0,0.25); border-radius:6px; padding:12px; margin-bottom:18px;}
+.detail-pesanan h3 {font-size:13px; margin-bottom:10px; color:#22c55e;}
+.baris-detail {display:flex; justify-content:space-between; padding:6px 0; font-size:12px; border-bottom:1px solid rgba(255,255,255,0.1);}
+.baris-detail:last-child {border-bottom:none; font-weight:bold; font-size:13px;}
+.label {color:#aaa;}
+
+.pesan {text-align:center; font-size:12px; margin-bottom:12px;}
+
+.tombol-pilih {display:flex; flex-direction:column; gap:8px; padding:0 25px;}
+.tombol-wa {
+  padding:9px 5px;
+  background:#25d366;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:100%;
+}
+.tombol-tele {
+  padding:9px 5px;
+  background:#0088cc;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:100%;
+}
+.tombol-wa img, .tombol-tele img {width:16px; height:16px; object-fit:contain;}
+.tombol-wa:active, .tombol-tele:active {transform:scale(0.97);}
+</style>
+</head>
+<body>
+
+<div class="kotak-utama">
+  <div class="judul">
+    <h2>✅ TERIMA KASIH SUDAH MEMBAYAR</h2>
+    <p>Berikut detail lengkap pesanan kamu:</p>
+  </div>
+
+  <div class="detail-pesanan">
+    <h3>📋 RINCIAN PESANAN</h3>
+    <div class="baris-detail">
+      <span class="label">Nama Barang</span>
+      <span id="dtNama">-</span>
+    </div>
+    <div class="baris-detail">
+      <span class="label">Durasi</span>
+      <span id="dtDurasi">-</span>
+    </div>
+    <div class="baris-detail">
+      <span class="label">Harga Normal</span>
+      <span id="dtNormal">-</span>
+    </div>
+    <div class="baris-detail">
+      <span class="label">Harga Diskon</span>
+      <span id="dtDiskon">-</span>
+    </div>
+    <div class="baris-detail">
+      <span class="label">Metode Pembayaran</span>
+      <span id="dtMetode">-</span>
+    </div>
+  </div>
+
+  <div class="pesan">Silakan kirim bukti pembayaran ke Admin:</div>
+
+  <div class="tombol-pilih">
+    <button class="tombol-wa" onclick="bukaWA()">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"> Kirim Bukti Ke WhatsApp
+    </button>
+    <button class="tombol-tele" onclick="bukaTele()">
+      <img src="https://cdn-icons-png.flaticon.com/512/906/906377.png"> Kirim Bukti Ke Telegram
+    </button>
+  </div>
+</div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+document.getElementById('dtNama').textContent = urlParams.get('nama') || '-';
+document.getElementById('dtDurasi').textContent = urlParams.get('durasi') || '-';
+document.getElementById('dtNormal').textContent = urlParams.get('normal') || '-';
+document.getElementById('dtDiskon').textContent = urlParams.get('diskon') || '-';
+document.getElementById('dtMetode').textContent = urlParams.get('metode') || '-';
+
+const nomorWA = '6281365013694';
+const linkTele = 'https://t.me/ST_MD_Hasan';
+const pesan = `✅ BUKTI PEMBAYARAN SMG STORE ✅
+
+📦 Barang: ${urlParams.get('nama')}
+⏳ Durasi: ${urlParams.get('durasi')}
+💸 Harga Normal: ${urlParams.get('normal')}
+💸 Harga Diskon: ${urlParams.get('diskon')}
+💳 Metode Bayar: ${urlParams.get('metode')}
+
+Saya akan Melampirkan bukti pembayaran di pesan ini ya kak!`;
+
+function bukaWA(){window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`,'_blank');}
+function bukaTele(){window.open(`${linkTele}?text=${encodeURIComponent(pesan)}`,'_blank');}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harga Diamond Free Fire - SMG Store</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #1a1a2e; padding: 20px 15px; min-height: 100vh; }
+    .judul { color: #ffcc00; text-align: center; margin-bottom: 25px; font-size: 22px; font-weight: 900; padding-top: 10px; }
+
+    .grid-tombol {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto 30px;
+      padding: 0 10px;
+    }
+    .tombol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, #ffcc00, #ff9900);
+      color: #000;
+      text-align: center;
+      font-weight: bold;
+      font-size: 13px;
+      border-radius: 8px;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+    .tombol.aktif { background: #fff; border-color: #ffcc00; color: #000; }
+    .ikon-gambar { width: 20px; height: 20px; object-fit: contain; } /* DIPERBESAR JADI 20px */
+
+    .kotak-harga { max-width: 450px; margin: 0 auto 30px; display: none; }
+    .kotak-harga.aktif { display: block; }
+    .judul-paket { color: #ffcc00; text-align: center; margin-bottom: 15px; font-size: 19px; font-weight: 900; }
+    .item {
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 14px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 15px;
+    }
+    .harga { color: #ff2222; font-size: 17px; }
+
+    @media (max-width: 400px) { 
+      .grid-tombol { grid-template-columns: 1fr; max-width: 100%; padding: 0; } 
+    }
+  </style>
+</head>
+<body>
+
+  <div id="atas"></div>
+  <h2 class="judul">PILIHAN SEMUA BRAND</h2>
+
+  <div class="grid-tombol">
+    <div class="tombol aktif" onclick="tampilkanHarga(1)">
+      <img src="semua ikon/hassan.PNG" class="ikon-gambar" alt="Diamond">
+      HASSAN
+    </div>
+    <div class="tombol" onclick="tampilkanHarga(2)">
+      <img src="semua ikon/vvipmods.PNG" class="ikon-gambar" alt="Diamond">
+      VVIP MODS
+    </div>
+  </div>
+
+  <div class="kotak-harga aktif" id="harga1">
+    <h3 class="judul-paket">HASSAN</h3>
+    <div class="item"><span>1 Hari</span><span class="harga">Rp 20.000</span></div>
+    <div class="item"><span>7 Hari</span><span class="harga">Rp 50.000</span></div>
+    <div class="item"><span>30 Hari</span><span class="harga">Rp 150.000</span></div>
+  </div>
+
+  <div class="kotak-harga" id="harga2">
+    <h3 class="judul-paket">VVIP MODS</h3>
+    <div class="item"><span>3 Hari</span><span class="harga">Rp 35.000</span></div>
+    <div class="item"><span>7 Hari</span><span class="harga">Rp 75.000</span></div>
+    <div class="item"><span>30 Hari</span><span class="harga">Rp 150.000</span></div>
+  </div>
+  </div>
+
+  <script>
+    function tampilkanHarga(nomor) {
+  // AMBIL NAMA LANGSUNG DARI TOMBOL YANG DIKLIK, GAK PERLU DAFTAR MANUAL
+  const namaTombol = event.target.textContent.trim();
+  localStorage.setItem("merekTerpilih", namaTombol);
+
+  // KODE ASLI KAMU, TIDAK DIUBAH SEDIKITPUN
+  document.querySelectorAll('.tombol').forEach(t => t.classList.remove('aktif'));
+  document.querySelectorAll('.kotak-harga').forEach(h => h.classList.remove('aktif'));
+  event.target.classList.add('aktif');
+  document.getElementById('harga' + nomor).classList.add('aktif');
+  document.getElementById('harga' + nomor).scrollIntoView({behavior:'smooth'});
+}
+  </script>
+
+<script>
+// ======================
+// ⚙️ SETUP DATA KAMU
+// ======================
+const NOMOR_WA = '6281365013694';
+
+// DATA METODE + IKON + QRIS + INFO REKENING
+const DATA_BAYAR = {
+  QRIS: {
+    ikon: 'ikon_pembayaran/qris_smg.png',
+    gambarQris: 'ikon_pembayaran/qris_smg.png',
+    info: 'Scan kode QRIS di atas<br>Semua bank & e-wallet bisa dipakai'
+  },
+  DANA: {
+    ikon: 'ikon_pembayaran/dana_kamu.png',
+    gambarQris: 'ikon_pembayaran/dana_kamu.png',
+    info: 'No. Akun: <b>081234567890</b><br>Atas Nama: SMG Store'
+  },
+  ShopeePay: {
+    ikon: 'ikon_pembayaran/shopeepay_kamu.png',
+    gambarQris: 'ikon_pembayaran/shopeepay_kamu.png',
+    info: 'No. Akun: <b>081234567890</b><br>Atas Nama: SMG Store'
+  },
+  SeaBank: {
+    ikon: 'ikon_pembayaran/seabank_kamu.png',
+    gambarQris: 'ikon_pembayaran/seabank_kamu.png',
+    info: 'No. Rekening: <b>901234567890</b><br>Atas Nama: SMG Store'
+  },
+  Binance: {
+    ikon: 'ikon_pembayaran/binance_kamu.png',
+    gambarQris: 'ikon_pembayaran/binance_kamu.png',
+    info: 'ID Akun: <b>12345678</b><br>Atas Nama: SMG Store'
+  }
+};
+
+// 📦 SIMPAN DATA OTOMATIS
+let namaPaketTerpilih = '';
+let durasiTerpilih = '';
+let hargaTerpilih = '';
+
+// ======================
+// 1. AMBIL NAMA PAKET (TIDAK MERUSAK FUNGSI ASLI tampilkanHarga)
+// ======================
+document.querySelectorAll('.tombol').forEach(tombol => {
+  const fungsiAsli = tombol.getAttribute('onclick');
+  tombol.onclick = function(e) {
+    eval(fungsiAsli); // Jalankan fungsi asli kamu tetap aman
+    namaPaketTerpilih = this.textContent.trim();
+  };
+});
+
+// ======================
+// 2. KLIK BARANG → AMBIL OTOMATIS DURASI + HARGA
+// ======================
+document.querySelectorAll('.item').forEach(baris => {
+  baris.style.cursor = 'pointer';
+  baris.onclick = function() {
+    if (!namaPaketTerpilih) {
+      alert('⚠️ Pilih dulu paket di atas ya kak!');
+      return;
+    }
+    // Baca semua isi baris lalu pisahkan harga & durasi
+    const semuaIsi = this.textContent.replace(/\s+/g, ' ').trim();
+    hargaTerpilih = this.querySelector('.harga')?.textContent.trim() || 'Harga tidak tertera';
+    durasiTerpilih = semuaIsi.replace(hargaTerpilih, '').trim();
+
+    tampilkanPilihMetode();
+  };
+});
+
+// ======================
+// 3. KOTAK PILIH METODE (DENGAN IKON)
+// ======================
+function tampilkanPilihMetode() {
+  const kotakPilih = document.createElement('div');
+  kotakPilih.id = 'kotakPilih';
+  kotakPilih.style = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px;z-index:99999;overflow-y:auto;';
+  kotakPilih.innerHTML = `
+    <div style="background:#fff;padding:15px;border-radius:10px;max-width:360px;width:100%;">
+      <h3 style="color:#ffcc00;text-align:center;margin:0 0 12px;font-size:16px;">PILIH CARA BAYAR</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:15px;" id="daftarMetode"></div>
+      <button onclick="document.getElementById('kotakPilih').remove()" style="width:100%;padding:10px;border:none;border-radius:8px;background:#ddd;font-size:14px;font-weight:bold;">Batal</button>
+    </div>
+  `;
+  document.body.appendChild(kotakPilih);
+
+  const daftar = kotakPilih.querySelector('#daftarMetode');
+  Object.entries(DATA_BAYAR).forEach(([nama, data]) => {
+    const btn = document.createElement('button');
+    btn.style = 'display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eee;border-radius:8px;cursor:pointer;background:#fff;font-size:14px;font-weight:bold;text-align:left;';
+    btn.innerHTML = `<img src="${data.ikon}" style="width:45px;height:45px;border-radius:6px;object-fit:contain;"> ${nama}`;
+    btn.onclick = () => {
+      kotakPilih.remove();
+      tampilkanDetail(nama);
+    };
+    daftar.appendChild(btn);
+  });
+}
+
+// ======================
+// 4. KOTAK DETAIL QRIS & INFO REKENING
+// ======================
+function tampilkanDetail(namaMetode) {
+  const data = DATA_BAYAR[namaMetode];
+  const kotakDetail = document.createElement('div');
+  kotakDetail.id = 'kotakDetail';
+  kotakDetail.style = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px;z-index:100000;overflow-y:auto;';
+  kotakDetail.innerHTML = `
+    <div style="background:#fff;padding:15px;border-radius:10px;max-width:360px;width:100%;text-align:center;">
+      <h3 style="color:#ffcc00;margin:0 0 12px;font-size:16px;">PEMBAYARAN ${namaMetode}</h3>
+      <img src="${data.gambarQris}" style="width:220px;height:220px;border-radius:8px;margin-bottom:12px;object-fit:contain;">
+      <div style="font-size:14px;line-height:1.6;margin-bottom:15px;">${data.info}</div>
+      <div style="display:flex;gap:10px;">
+        <button onclick="document.getElementById('kotakDetail').remove();tampilkanPilihMetode();" style="flex:1;padding:10px;border:none;border-radius:8px;background:#ddd;font-size:14px;font-weight:bold;">Kembali</button>
+        <button onclick="kirimKeWA('${namaMetode}')" style="flex:1;padding:10px;border:none;border-radius:8px;background:linear-gradient(180deg,#ffcc00,#ff9900);font-size:14px;font-weight:bold;">Sudah Bayar ✅</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(kotakDetail);
+}
+
+// ======================
+// 5. KIRIM KE WA DENGAN DATA LENGKAP
+// ======================
+function kirimKeWA(metode) {
+  const namaGame = "Blood Strike";
+  // AMBIL NAMA BRAND YANG SUDAH DISIMPAN
+  const merekBrand = localStorage.getItem("merekTerpilih") || "SMG Store";
+
+  // PINDAH KE HALAMAN KONFIRMASI
+  const linkTujuan = `konfirmasih_bukti_pembayaran.html?game=${encodeURIComponent(namaGame)}&durasi=${encodeURIComponent(durasiTerpilih)}&merek=${encodeURIComponent(merekBrand)}&harga=${encodeURIComponent(hargaTerpilih)}&bayar=${encodeURIComponent(metode)}`;
+
+  const kotakLama = document.getElementById('kotakDetail');
+  if (kotakLama) kotakLama.remove();
+  window.location.href = linkTujuan;
+}
+</script>
+</body>
+</html>

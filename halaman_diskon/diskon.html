@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔥 PENAWARAN DISKON SMG STORE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #1a2440;
+      min-height: 100vh;
+      padding: 15px 10px;
+      color: #fff;
+      position: relative;
+    }
+    .judul {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .judul h2 {
+      font-size: 18px;
+    }
+
+    /* ✅ EFEK UTAMA - TIDAK DIUBAH */
+    @keyframes munculPenuh {
+      0% { opacity: 0; transform: translateY(15px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes tekanKotak {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.92); }
+      100% { transform: scale(1.03); }
+    }
+    @keyframes gerakTombol {
+      0% { opacity: 0; transform: translateY(12px) scale(0.9); }
+      50% { transform: translateY(-2px) scale(1.02); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes hilangHalus {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(8px) scale(0.95); }
+    }
+    @keyframes cahayaGerak {
+      0% { left: -100%; }
+      100% { left: 200%; }
+    }
+    @keyframes denyut {
+      0%, 100% { box-shadow: 0 0 5px #ff0000, 0 0 10px rgba(255,0,0,0.3); }
+      50% { box-shadow: 0 0 15px #ff3333, 0 0 25px rgba(255,0,0,0.5); }
+    }
+    @keyframes jatuhKoin {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(120px) rotate(360deg); opacity: 0; }
+    }
+
+    /* ✅ 2 KARTU MENU - TIDAK DIUBAH */
+    .wadah-daftar {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+    .kartu {
+      flex: 0 0 calc(50% - 4px);
+      max-width: calc(50% - 4px);
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 8px;
+      border-left: 3px solid #ff0000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      animation: munculPenuh 0.4s ease forwards;
+    }
+    .kartu:nth-child(2) { animation-delay: 0.1s; }
+
+    .ikon-barang {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+      padding: 3px;
+    }
+
+    .bagian-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .nama {
+      font-weight: bold;
+      font-size: 12px;
+    }
+    .harga-lama {
+      font-size: 10px;
+      color: #ffcccc;
+      text-decoration: line-through;
+    }
+
+    /* ✅ TOMBOL CEK HARGA - TIDAK DIUBAH */
+    .tombol-cek {
+      padding: 5px;
+      background: #ff0000;
+      color: #fff;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    /* ✅ WADAH HARGA TANPA KOTAK BESAR - TIDAK DIUBAH */
+    .wadah-harga-bawah {
+      display: none;
+      padding: 0;
+      background: transparent;
+      border-radius: 0;
+      text-align: center;
+      margin-bottom: 15px;
+      position: relative;
+    }
+    .wadah-harga-bawah.muncul-efek {
+      display: block;
+      animation: munculPenuh 0.4s ease forwards;
+    }
+
+    .nama-pilih {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    /* ✅ KOTAK HARGA TERPISAH - TIDAK DIUBAH */
+    .daftar-harga {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      padding: 0;
+      background: transparent;
+    }
+    .pilihan-harga {
+      flex: 1 1 calc(30% - 15px);
+      min-width: 100px;
+      padding: 16px 10px;
+      background: #ffffff;
+      color: #ff0000;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 3px solid #e0e0e0;
+      opacity: 0;
+      transform: translateY(10px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: visible;
+    }
+    .pilihan-harga.muncul-sendiri {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .pilihan-harga.terpilih {
+      border-color: #ff0000;
+      background: #fff0f0;
+      box-shadow: 0 5px 18px rgba(255,0,0,0.4);
+      transform: scale(1.05);
+    }
+    .pilihan-harga.bukan-pilih {
+      opacity: 0.7;
+      transform: scale(0.97);
+    }
+
+    /* ✅ ELEMEN KOIN - TIDAK DIUBAH */
+    .koin {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #ffeb3b, #ffc107);
+      border-radius: 50%;
+      border: 2px solid #ff9800;
+      font-size: 11px;
+      font-weight: bold;
+      color: #b77900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      content: 'Rp';
+      animation: jatuhKoin 0.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ✅ TOMBOL AMBIL DISKON - TIDAK DIUBAH */
+    .tombol-beli-pilih {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 22px;
+      width: fit-content;
+      margin: 0 auto;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #ff1a1a, #ff0000, #cc0000);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 12px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.2);
+      animation: denyut 2s infinite ease-in-out;
+    }
+    .tombol-beli-pilih::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: cahayaGerak 3s infinite linear;
+    }
+    .tombol-beli-pilih:active {
+      transform: scale(0.96);
+      box-shadow: 0 0 20px rgba(255,0,0,0.7);
+    }
+  </style>
+</head>
+<body id="seluruhLayar">
+
+  <div class="judul">
+    <h2>🔥 PENAWARAN DISKON TERBATAS 🔥</h2>
+  </div>
+
+  <div class="wadah-daftar">
+    <div class="kartu">
+      <img src="../icon brand/migul.png" alt="MIGUL IOS" class="ikon-barang">
+      <div class="bagian-info">
+        <div class="nama">TERSEDIA MIGUL IOS</div>
+        <div class="harga-lama">Normal: Mulai Rp 270.000</div>
+        <button class="tombol-cek" onclick="tampilBawah('HNAYA TERSEDIA DURASI 30 HARI MIGUL IOS', ['30 Hari Rp 200.000/$15', 'Rp.', 'Rp.'])">CEK HARGA DISKON</button>
+      </div>
+    </div>
+
+    <div class="kartu">
+      <img src="../icon brand/smg.png" alt="BELUM TERSEDIA" class="ikon-barang">
+      <div class="bagian-info">
+        <div class="nama">BELUM TERSEDIA</div>
+        <div class="harga-lama">Normal: Mulai Rp 00.000</div>
+        <button class="tombol-cek" onclick="tampilBawah('LK TEAM', ['Rp.', 'Rp.', 'Rp.'])">CEK HARGA DISKON</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wadah-harga-bawah" id="kotakHargaBawah"></div>
+
+  <a href="javascript:kirimData()" class="tombol-beli-pilih" id="tombolBeli">🔥 AMBIL DISKON - <span id="tampilHarga"></span></a>
+
+  <script>
+
+// === FUNGSI TAMPILKAN HARGA ===
+function tampilBawah(nama, daftarHarga) {
+  const wadah = document.getElementById('kotakHargaBawah');
+  wadah.innerHTML = '';
+
+  daftarHarga.forEach((teks, i) => {
+    const kotak = document.createElement('div');
+    kotak.className = 'pilihan-harga';
+    kotak.textContent = teks;
+
+    kotak.onclick = function(){
+      document.getElementById('tampilHarga').textContent = teks;
+    };
+
+    wadah.appendChild(kotak);
+  });
+}
+
+// === FUNGSI KIRIM DATA KE PEMBAYARAN ===
+function kirimData(){
+  const hargaYangDipilih = document.getElementById('tampilHarga').textContent.trim();
+  const namaBarang = document.querySelector('.nama')?.textContent || 'Diskon Khusus';
+  const hargaNormalAsli = document.querySelector('.harga-normal')?.textContent || 'Rp 270.000';
+
+  // ✅ KIRIM 4 DATA LENGKAP: NAMA, DURASI, NORMAL, DISKON
+  window.location.href = `bayar_diskon.html?nama=${encodeURIComponent(namaBarang)}&durasi=${encodeURIComponent(hargaYangDipilih)}&normal=${encodeURIComponent(hargaNormalAsli)}&diskon=${encodeURIComponent(hargaYangDipilih)}`;
+}
+
+    // ✅ KLIK LUAR → SEMUA HARGA & TOMBOL HILANG TOTAL
+    document.getElementById('seluruhLayar').addEventListener('click', function(e) {
+      const tombol = document.getElementById('tombolBeli');
+      const kotakHarga = document.getElementById('kotakHargaBawah');
+      const tombolCek = document.querySelectorAll('.tombol-cek');
+      
+      // JIKA KLIK BUKAN DI TOMBOL CEK, BUKAN DI KOTAK HARGA, BUKAN DI TOMBOL BELI → HILANGKAN SEMUA
+      if (!kotakHarga.contains(e.target) && !tombol.contains(e.target) && !Array.from(tombolCek).some(btn => btn.contains(e.target))) {
+        tombol.style.animation = 'hilangHalus 0.25s ease forwards, denyut 2s infinite ease-in-out';
+        kotakHarga.style.animation = 'hilangHalus 0.25s ease forwards';
+        setTimeout(() => {
+          tombol.style.display = 'none';
+          kotakHarga.style.display = 'none';
+          kotakHarga.classList.remove('muncul-efek');
+        }, 250);
+      }
+    });
+
+    // ✅ FUNGSI BUAT KOIN - TIDAK DIUBAH
+    function buatKoin(elemen) {
+      const jumlahKoin = 7;
+      for (let i = 0; i < jumlahKoin; i++) {
+        const koin = document.createElement('div');
+        koin.classList.add('koin');
+        koin.textContent = 'Rp';
+        const acakX = (Math.random() - 0.5) * 80;
+        const acakY = (Math.random() - 0.5) * 40;
+        koin.style.left = `calc(50% + ${acakX}px)`;
+        koin.style.top = `calc(50% + ${acakY}px)`;
+        koin.style.animationDuration = (0.6 + Math.random() * 0.4) + 's';
+        elemen.appendChild(koin);
+        setTimeout(() => koin.remove(), 1000);
+      }
+    }
+
+    function tampilBawah(nama, daftarHarga) {
+      const kotak = document.getElementById("kotakHargaBawah");
+      const tombolBeli = document.getElementById("tombolBeli");
+      const tampilHarga = document.getElementById("tampilHarga");
+
+      // ✅ RESET SAAT KLIK CEK HARGA - TIDAK DIUBAH
+      kotak.classList.remove("muncul-efek");
+      kotak.style.animation = 'none';
+      tombolBeli.style.display = 'none';
+      tombolBeli.style.animation = 'none';
+      tampilHarga.textContent = "";
+      kotak.innerHTML = `<div class="nama-pilih">${nama}</div><div class="daftar-harga" id="tempatHarga"></div>`;
+
+      setTimeout(() => {
+        kotak.style.display = 'block';
+        kotak.classList.add("muncul-efek");
+      }, 50);
+
+      const wadahHarga = document.getElementById("tempatHarga");
+      daftarHarga.forEach((harga, indeks) => {
+        const baris = document.createElement("div");
+        baris.className = "pilihan-harga";
+        baris.textContent = harga;
+
+        baris.onclick = function(e) {
+          e.stopPropagation();
+
+          // ✅ RESET KOTAK HARGA - TIDAK DIUBAH
+          document.querySelectorAll(".pilihan-harga").forEach(item => {
+            item.classList.remove("terpilih", "bukan-pilih");
+            item.style.animation = 'none';
+            void item.offsetWidth;
+          });
+
+          // ✅ EFEK KOTAK HARGA + KOIN - TIDAK DIUBAH
+          baris.classList.add("terpilih");
+          baris.style.animation = "tekanKotak 0.3s ease forwards";
+          buatKoin(baris);
+          document.querySelectorAll(".pilihan-harga:not(.terpilih)").forEach(item => {
+            item.classList.add("bukan-pilih");
+          });
+
+          // ✅ EFEK TOMBOL - TIDAK DIUBAH
+          tampilHarga.textContent = harga;
+          tombolBeli.style.display = 'flex';
+          tombolBeli.style.animation = 'none';
+          void tombolBeli.offsetWidth;
+          tombolBeli.style.animation = "gerakTombol 0.45s ease forwards, denyut 2s infinite ease-in-out";
+        };
+
+        wadahHarga.appendChild(baris);
+        setTimeout(() => {
+          baris.classList.add("muncul-sendiri");
+          baris.style.transition = `all 0.35s ease ${indeks * 0.12}s`;
+        }, 100 + (indeks * 120));
+      });
+    }
+  </script>
+
+<style>
+@keyframes nyalaPromo {
+  0%, 100% { box-shadow: 0 0 10px #ffeb3b, 0 0 20px rgba(255,235,59,0.4); }
+  50% { box-shadow: 0 0 20px #ffeb3b, 0 0 35px rgba(255,235,59,0.7); }
+}
+
+@keyframes naikKoin {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(-90px) rotate(360deg); opacity: 0; }
+}
+
+.koin-diskon {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle at 30% 30%, #ffeb3b, #ffc107);
+  border-radius: 50%;
+  border: 2px solid #ff9800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px; /* Ukuran font diperkecil */
+  font-weight: bold;
+  color: #b77900;
+  animation: naikKoin 3.5s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+}
+</style>
+
+<div id="kotakPromo" style="position: relative; overflow: visible; text-align:center; color:#fff; font-size:13px; font-weight:bold; margin-top:20px; margin-bottom:10px; padding:14px 16px; background:linear-gradient(135deg,rgba(255,50,50,0.25),rgba(255,150,0,0.25)); border-radius:12px; border:2px solid #ffeb3b; line-height:1.7; text-shadow:0 0 8px rgba(255,235,59,0.7); animation: nyalaPromo 2s infinite ease-in-out;">
+⚡ PROMO DISKON SPESIAL ⚡<br>
+Berakhir : <span style="color:#ffeb3b; font-size:14px;">Saat Stok Kunci habis (Kunci yang tersedia 4)</span><br>
+Stok Kunci Sangat Terbatas! Segera Ambil Sebelum Habis!
+</div>
+
+<script>
+function buatKoinDiskon() {
+  const kotak = document.getElementById('kotakPromo');
+  const koin = document.createElement('div');
+  koin.className = 'koin-diskon';
+  koin.textContent = 'Diskon'; // Teks diubah menjadi "Diskon"
+
+  const posX = Math.random() * (kotak.offsetWidth - 28);
+  const posY = Math.random() * (kotak.offsetHeight - 28);
+  koin.style.left = posX + 'px';
+  koin.style.top = posY + 'px';
+  koin.style.animationDelay = (Math.random() * 2) + 's';
+
+  kotak.appendChild(koin);
+  setTimeout(() => koin.remove(), 5500);
+}
+
+setInterval(buatKoinDiskon, 600);
+</script>
+
+<script>
+// ✅ TEMPAT MEMUNCULAKN DAN MENYEMBUNYIKAN TOMBOL HARGA:
+// ✅ UBAH ANGKA DI BAWAH INI SAJA:
+// 1 = tampil 1 harga saja
+// 2 = tampil 2 harga
+// 3 = tampil semua 3 harga
+const MAU_TAMPILKAN = 1;
+
+setInterval(() => {
+  const wadah = document.getElementById('tempatHarga');
+  if (!wadah) return;
+  for(let i = 0; i < wadah.children.length; i++){
+    wadah.children[i].style.display = i < MAU_TAMPILKAN ? '' : 'none';
+  }
+}, 100);
+</script>
+
+
+<div style="text-align:center; color:#ffffff; font-size:13px; font-weight:bold; margin-top:20px; margin-bottom:15px; padding:15px 18px; background:linear-gradient(135deg,rgba(180,20,20,0.3),rgba(200,80,0,0.3)); border-radius:12px; border:2px solid #ffd700; line-height:1.7; text-shadow:0 0 10px rgba(255,215,0,0.5);">
+🔥 PEMBERITAHUAN PROMO KHUSUS 🔥<br><br>
+Ingat ya, diskon spesial seperti ini Tidak Selalu Ada Setiap Hari!<br>
+Kesempatan seperti ini sangat jarang didapatkan!<br><br>
+✅ Segera manfaatkan selagi promo masih berjalan<br>
+✅ Penawaran terbaik hanya ada di SMG STORE<br><br>
+Simpan dan bagikan info ini ke temanmu sebelum terlambat!
+</div>
+
+<div style="text-align:center; color:#ffffff; font-size:13px; font-weight:bold; margin-top:15px; margin-bottom:10px; padding:15px 18px; background:linear-gradient(135deg,rgba(0,80,150,0.3),rgba(0,120,100,0.3)); border-radius:12px; border:2px solid #00ffff; line-height:1.7; text-shadow:0 0 10px rgba(0,255,255,0.5);">
+📢 INFO PROMO BERIKUTNYA 📢<br><br>
+Nantikan penawaran spesial dan diskon menarik lainnya!<br>
+Kami akan hadirkan kejutan harga diskon untuk produk lainnya!<br><br>
+🔔 Pastikan kamu selalu cek halaman ini secara berkala<br>
+🔔 Jangan sampai ketinggalan info terbaru dari SMG STORE<br><br>
+Bersiaplah untuk kesempatan istimewa selanjutnya!
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konfirmasi Pembayaran - SMG Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+* {box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif;}
+body {
+  background: #1a2440;
+  color: #ffffff;
+  padding: 20px 15px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wadah {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255,255,255,0.06);
+  border: 2px solid #ffcc00;
+  border-radius: 12px;
+  padding: 25px 20px;
+  text-align: center;
+}
+.judul {
+  color: #ffcc00;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.deskripsi {
+  font-size: 14px;
+  color: #ddd;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+.rincian {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  text-align: left;
+  font-size: 15px;
+  line-height: 2;
+}
+.rincian .label {
+  color: #ffcc00;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 200px;
+}
+.grup-tombol {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-wa, .btn-tl {
+  flex: 1 1 145px;
+  padding: 13px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+  transition: 0.2s;
+}
+.btn-wa {background: #25D366; color: #000;}
+.btn-tl {background: #0088CC;}
+.btn-wa:hover, .btn-tl:hover {transform: translateY(-1px);}
+</style>
+</head>
+<body>
+<div class="wadah">
+  <h2 class="judul"><i class="fa-solid fa-circle-check"></i> PEMBAYARAN DITERIMA</h2>
+  <p class="deskripsi">Silakan pilih cara kirim bukti ke admin,<br>pesan sudah terisi otomatis!</p>
+  <div class="rincian" id="rincianPesanan">
+    <p><span class="label">Memuat data...</span></p>
+  </div>
+  <div class="grup-tombol">
+    <a id="linkWA" class="btn-wa" target="_blank"><i class="fa-brands fa-whatsapp"></i> WHATSAPP</a>
+    <a id="linkTL" class="btn-tl" target="_blank"><i class="fa-brands fa-telegram"></i> TELEGRAM</a>
+  </div>
+</div>
+
+<script>
+const NOMOR_WA = "6281365013694"; // Ganti nomor WA kamu
+const USERNAME_TELE = "ST_MD_Hasan"; // Ganti username Telegram kamu
+
+// === AMBIL SEMUA DATA LENGKAP ===
+const ambil = new URLSearchParams(window.location.search);
+const game = ambil.get("game") || "Free Fire";
+const durasi = ambil.get("durasi") || "-";
+const merek = ambil.get("merek") || localStorage.getItem("merekTerpilih") || "SMG Store";
+const harga = ambil.get("harga") || "-";
+const bayar = ambil.get("bayar") || "-";
+const kodeReseller = localStorage.getItem("kunciAkses") || localStorage.getItem("sandiReseller") || "Tidak Ada";
+
+// === TAMPILKAN KE RINCIAN HALAMAN ===
+document.getElementById("rincianPesanan").innerHTML = `
+<p><span class="label">Game:</span> ${game}</p>
+<p><span class="label">Durasi:</span> ${durasi}</p>
+<p><span class="label">Merek/Brand:</span> ${merek}</p>
+<p><span class="label">Kode/sandi Login Reseller:</span> ${kodeReseller}</p>
+<p><span class="label">Total Bayar:</span> ${harga}</p>
+<p><span class="label">Metode:</span> ${bayar}</p>
+`;
+
+// === BUAT PESAN OTOMATIS UNTUK DIKIRIM ===
+const pesanKirim = encodeURIComponent(`✅ BUKTI PEMBAYARAN RESELLER SMG STORE
+Game: ${game}
+Durasi: ${durasi}
+Merek/Brand: ${merek}
+Kode/sandi Login Reseller: ${kodeReseller}
+Total Bayar: ${harga}
+Metode Pembayaran: ${bayar}
+
+Mohon segera diproses ya kak! Terima kasih 🙏`);
+
+// === PASANG KE TOMBOL WA & TELEGRAM ===
+document.getElementById("linkWA").href = `https://wa.me/${NOMOR_WA}?text=${pesanKirim}`;
+document.getElementById("linkTL").href = `https://t.me/${USERNAME_TELE}?text=${pesanKirim}`;
+
+// Tampilkan rincian
+document.getElementById("rincianPesanan").innerHTML = `
+<p><span class="label">Game:</span> ${game}</p>
+<p><span class="label">Durasi:</span> ${durasi}</p>
+<p><span class="label">Merek/Brand:</span> ${merek}</p>
+<p><span class="label">Kode/sandi Login Reseller:</span> ${kodeReseller}</p>
+<p><span class="label">Total Bayar:</span> ${harga}</p>
+<p><span class="label">Metode:</span> ${bayar}</p>
+`;
+
+// Buat pesan
+const pesan = `✅ BUKTI PEMBAYARAN RESELLER SMG STORE
+Game: ${game}
+Durasi: ${durasi}
+Merek/Brand: ${merek}
+Kode/sandi Login Reseller: ${kodeReseller}
+Total Bayar: ${harga}
+Metode: ${bayar}
+Mohon segera diproses ya kak! Terima kasih 🙏`;
+
+const pesanJadi = encodeURIComponent(pesan);
+document.getElementById("linkWA").href = `https://wa.me/${NOMOR_WA}?text=${pesanJadi}`;
+document.getElementById("linkTL").href = `https://t.me/${USERNAME_TELE}?text=${pesanJadi}`;
+</script>
+
+<style>
+html {
+  zoom: 0.88; /* DIPERBESAR JADI 88% */
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  transform: scale(0.88) !important; /* SAMA JUGA DI SINI */
+  transform-origin: top center !important;
+  width: 114% !important; /* DISESUAIKAN BIAR GAK KEPOTONG */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+</style>
+</body>
+</html>

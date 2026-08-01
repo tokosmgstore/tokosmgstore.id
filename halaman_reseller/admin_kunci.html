@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔧 ADMIN - KELOLA KUNCI RESELLER</title>
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+    body {
+      background: #1a2440;
+      color: white;
+      padding: 20px 15px;
+      min-height: 100vh;
+    }
+    .kotak {
+      background:rgba(255,255,255,0.05);
+      padding:20px;
+      border-radius:12px;
+      border:2px solid #ffcc00;
+      margin-bottom:20px;
+      max-width:480px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    h2 {text-align:center; margin-bottom:15px; color:#ffcc00; font-size:22px;}
+    h3 {margin-bottom:10px; color:#ffc000; font-size:16px;}
+    input, button {
+      width:100%;
+      padding:12px;
+      margin:6px 0;
+      border-radius:8px;
+      border:none;
+      font-size:15px;
+      outline:none;
+    }
+    input {background:#253359; color:white; border:1px solid #445588;}
+    input:focus {border-color:#ffcc00;}
+    button {background:linear-gradient(180deg, #ffd54f, #ffb300); color:#000; font-weight:bold; cursor:pointer; transition:0.2s;}
+    button:active {transform:scale(0.98);}
+    .btn-hapus {width:auto; padding:6px 10px; background:#dc2626; color:white; font-size:12px; margin:2px;}
+    .btn-reset {width:auto; padding:6px 10px; background:#2563eb; color:white; font-size:12px; margin:2px;}
+    .item-kunci {
+      background:rgba(255,255,255,0.05);
+      padding:12px;
+      border-radius:6px;
+      margin:8px 0;
+      font-size:13px;
+    }
+    .status {font-size:12px; margin:6px 0; font-weight:bold;}
+    .status.aktif {color:#88ff88;}
+    .status.belum {color:#ffcc66;}
+    .info-penting {
+      background:rgba(255,192,0,0.1);
+      border-left:3px solid #ffc000;
+      padding:10px;
+      border-radius:6px;
+      margin-bottom:15px;
+      font-size:12px;
+      color:#ddd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="kotak">
+  <h2>🔧 KELOLA KUNCI RESELLER</h2>
+  <div class="info-penting">
+    ⚠️ HALAMAN KHUSUS ADMIN SAJA!<br>
+    ✅ 1 Kunci = Hanya Bisa 1 Perangkat Sekaligus<br>
+    🔵 <b>🔄 RESET PERANGKIT</b> = Kunci tetap sama, status balik jadi 0/0<br>
+    🔴 <b>🗑️ HAPUS KUNCI</b> = Matikan kunci selamanya
+  </div>
+
+  <h3>➕ BUAT KUNCI BARU</h3>
+  <input type="text" id="nama_reseller" placeholder="Nama Reseller">
+  <input type="text" id="kunci_baru" placeholder="Sandi/Kunci Login">
+  <button onclick="buatKunci()">✅ SIMPAN KUNCI</button>
+</div>
+
+<div class="kotak">
+  <h3>📋 DAFTAR SEMUA KUNCI</h3>
+  <div id="daftar_kunci"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script>
+const config = {
+  apiKey: "AIzaSyB4-Z-Eto-ZEWgSFALDeGfG1qQr0MHI",
+  authDomain: "smg-store-ef660.firebaseapp.com",
+  databaseURL: "https://smg-store-ef660-default-rtdb.firebaseio.com",
+  projectId: "smg-store-ef660",
+  storageBucket: "smg-store-ef660.appspot.com",
+  messagingSenderId: "61740593036",
+  appId: "1:61740593036:web:beb8903712c2c3750e89421"
+};
+firebase.initializeApp(config);
+const db = firebase.database();
+const refKunci = db.ref("kunci_reseller");
+
+function buatKunci(){
+  const nama = document.getElementById("nama_reseller").value.trim();
+  const kunci = document.getElementById("kunci_baru").value.trim();
+  if(!nama || !kunci) return alert("⚠️ Isi semua kolom dulu!");
+  
+  refKunci.child(nama).set({
+    sandi: kunci,
+    dibuat: Date.now(),
+    id_perangkat: null,
+    terakhir_login: null
+  }).then(() => {
+    alert("✅ Kunci dibuat! Status: BELUM DIPAKAI (0/0)");
+    document.getElementById("nama_reseller").value = "";
+    document.getElementById("kunci_baru").value = "";
+  });
+}
+
+refKunci.on("value", snap => {
+  const wadah = document.getElementById("daftar_kunci");
+  wadah.innerHTML = "";
+  if(!snap.exists()) { wadah.innerHTML = "<p style='text-align:center; color:#888;'>Belum ada kunci</p>"; return; }
+
+  snap.forEach(item => {
+    const nama = item.key;
+    const sandi = item.val().sandi;
+    const adaPerangkat = item.val().id_perangkat ? 
+      `<span class="status aktif">✅ SUDAH TERIKAT PERANGKIT (1/1)</span>` : 
+      `<span class="status belum">⚠️ BELUM DIPAKAI (0/0)</span>`;
+    
+    wadah.innerHTML += `
+    <div class="item-kunci">
+      <div>
+        <div>👤 ${nama} ➡️ 🔑 ${sandi}</div>
+        ${adaPerangkat}
+        <div style="margin-top:5px;">
+          <button class="btn-reset" onclick="resetPerangkat('${nama}')">🔄 RESET PERANGKIT</button>
+          <button class="btn-hapus" onclick="hapusKunci('${nama}')">🗑️ HAPUS KUNCI</button>
+        </div>
+      </div>
+    </div>`;
+  });
+});
+
+// ✅ FUNGSI RESET: HAPUS CATATAN PERANGKIT SAJA, KUNCI TETAP ADA
+function resetPerangkat(nama){
+  if(confirm(`🔄 Reset perangkat untuk: ${nama}?\n✅ Status balik jadi (0/0)\n✅ Bisa login di HP baru\n❌ HP lama otomatis ditolak`)){
+    refKunci.child(nama).update({
+      id_perangkat: null,
+      terakhir_login: null
+    }).then(() => alert("✅ BERHASIL! Status kembali jadi BELUM DIPAKAI (0/0)"));
+  }
+}
+
+function hapusKunci(nama){
+  if(confirm(`🗑️ Hapus total kunci: ${nama}?`)){
+    refKunci.child(nama).remove().then(() => alert("✅ Kunci dihapus total!"));
+  }
+}
+</script>
+
+</body>
+</html>

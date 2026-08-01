@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📸 Testimoni SMG STORE</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      box-sizing: border-box;
+    }
+    html, body {
+      background: #2c2c2c;
+      padding: 15px 8px 180px 8px;
+      position: relative;
+      scroll-behavior: smooth;
+      min-height: 100vh;
+    }
+
+    .judul {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .tombol_pengaturan {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 36px;
+      height: 36px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1001;
+      user-select: none;
+    }
+
+    .kotak_login {
+      position: fixed;
+      top: 10px;
+      left: 55px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+      border: 1px solid #ddd;
+      z-index: 1002;
+      display: none;
+      width: 170px;
+    }
+    .kotak_login input, .kotak_login button {
+      width: 100%;
+      padding: 7px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 12px;
+      display: block;
+    }
+
+    #wadah_upload {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: white;
+      padding: 10px 12px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      z-index: 998;
+      display: none;
+    }
+
+    .kotak_kirim {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      background: #f3f4f6;
+      border-radius: 24px;
+      padding: 10px 15px;
+    }
+    .ikon_kiri {
+      font-size: 20px;
+      line-height: 1;
+      padding-top: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    #isi_teks {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      resize: none;
+      min-height: 24px;
+      max-height: 120px;
+      overflow-y: auto;
+      line-height: 1.4;
+      outline: none;
+    }
+    .tombol_kirim {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .tombol_kirim:active {
+      background: #1d4ed8;
+    }
+    #file_gambar {
+      display: none;
+    }
+
+    .info_jumlah { font-size: 11px; color: #9ca3af; margin: 6px 0 0 0; text-align: center; }
+    .info_progres { font-size: 12px; color: #2563eb; font-weight: bold; margin: 5px 0; display: none; text-align: center; }
+
+    .pesan {
+      background: white;
+      max-width: 88%;
+      margin: 0 auto 10px auto;
+      padding: 10px;
+      padding-top: 30px;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .nama_pengirim {
+      font-weight: bold;
+      color: #2563eb;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    /* ✅ PERBAIKAN: GAMBAR TAMPIL UTUH TIDAK TERPOTONG */
+    .wadah_gambar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+    .wadah_gambar img {
+      flex: 1 1 calc(33.333% - 5px);
+      max-width: 100%;
+      max-height: 320px;
+      object-fit: contain; /* Ganti dari cover jadi contain */
+      border-radius: 5px;
+      background: #f3f4f6;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .wadah_gambar img:active { transform: scale(0.97); }
+    .wadah_gambar.jumlah-2 img { flex: 1 1 calc(50% - 5px); }
+    .wadah_gambar.jumlah-1 img { flex: 1 1 100%; max-height: 400px; }
+
+    .isi_teks {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #1f2937;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 4px;
+    }
+    .waktu_upload {
+      font-size: 12px;
+      color: #6b7280;
+      padding-top: 4px;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .bagian_kiri {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tombol_hapus {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+      z-index: 10;
+    }
+    .tombol_hapus:active {
+      background: #dc2626;
+    }
+
+    #tampilan_besar {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      display: none;
+      overflow: hidden;
+      touch-action: pan-x;
+      user-select: none;
+    }
+    #tampilan_besar .gambar_aktif {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .indikator_gambar {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.25);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body onload="window.scrollTo(0, 0);">
+
+<div class="tombol_pengaturan" id="btn_seting" onclick="event.stopPropagation(); bukaTutupLogin()">⚙️</div>
+
+<div class="kotak_login" id="kotak_login" onclick="event.stopPropagation()">
+  <input type="password" id="sandi" placeholder="Sandi Admin">
+  <button onclick="cekSandi()">🔓 Masuk</button>
+</div>
+
+<h2 class="judul">TESTIMONI</h2>
+<div id="daftar_pesan"></div>
+
+<div id="wadah_upload">
+  <div class="kotak_kirim">
+    <label class="ikon_kiri" for="file_gambar">📷</label>
+    <textarea id="isi_teks" placeholder="Tulis testimoni..."></textarea>
+    <button class="tombol_kirim" onclick="uploadSimpan()">➤</button>
+  </div>
+  <input type="file" id="file_gambar" accept="image/*" multiple onchange="tampilJumlahGambar()">
+  <div class="info_jumlah" id="info_jumlah">⚠️ Maksimal 10 gambar, masing-masing 5 MB</div>
+  <div class="info_progres" id="progres_upload"></div>
+</div>
+
+<div id="tampilan_besar" onclick="tutupGambar()">
+  <div class="indikator_gambar" id="info_gambar"></div>
+  <img class="gambar_aktif" id="img_besar" src="" alt="">
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script>
+const SANDI_ADMIN = "rizikusayang123";
+const config = {
+  apiKey: "AIzaSyB4-Z-Eto-ZEWgSFALDeGfG1qQr0MHI",
+  authDomain: "smg-store-ef660.firebaseapp.com",
+  databaseURL: "https://smg-store-ef660-default-rtdb.firebaseio.com",
+  projectId: "smg-store-ef660",
+  storageBucket: "smg-store-ef660.appspot.com",
+  messagingSenderId: "61740593036",
+  appId: "1:61740593036:web:beb8903712c2c3750e89421"
+};
+firebase.initializeApp(config);
+const db = firebase.database();
+
+let daftarGambar = [];
+let posisiSekarang = 0;
+let adalahAdmin = false;
+let mulaiX = 0;
+let totalPengunjung = 0;
+
+// SISTEM HITUNG PENGUNJUNG TETAP ASLI
+const dbPengunjung = db.ref("pengunjung_testimoni");
+const SUDAH_DILIHAT = localStorage.getItem("sudah_lihat_testimoni_smg");
+
+if(!SUDAH_DILIHAT){
+  localStorage.setItem("sudah_lihat_testimoni_smg", "true");
+  dbPengunjung.transaction(data => (data || 0) + 1);
+}
+
+dbPengunjung.on("value", snap => {
+  totalPengunjung = snap.val() || 0;
+  tampilkanSemuaTestimoni();
+});
+
+const kotakTeks = document.getElementById('isi_teks');
+kotakTeks.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
+});
+
+function tampilJumlahGambar(){
+  const fileInput = document.getElementById('file_gambar');
+  const infoJumlah = document.getElementById('info_jumlah');
+  if(fileInput.files.length > 0){
+    infoJumlah.textContent = `✅ Sudah dipilih: ${fileInput.files.length} gambar`;
+  }else{
+    infoJumlah.textContent = "⚠️ Maksimal 10 gambar, masing-masing 5 MB";
+  }
+}
+
+function formatWaktu(timestamp) {
+  const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  const d = new Date(timestamp);
+  const namaHari = hari[d.getDay()];
+  const tgl = d.getDate();
+  const namaBulan = bulan[d.getMonth()];
+  const thn = d.getFullYear();
+  const jam = String(d.getHours()).padStart(2, '0');
+  const menit = String(d.getMinutes()).padStart(2, '0');
+  return `${namaHari}, ${tgl} ${namaBulan} ${thn} • ${jam}:${menit}`;
+}
+
+function bukaTutupLogin(){
+  const kotak = document.getElementById("kotak_login");
+  kotak.style.display = kotak.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click", () => {
+  document.getElementById("kotak_login").style.display = "none";
+});
+
+function cekSandi(){
+  const input = document.getElementById("sandi").value.trim();
+  if(input === SANDI_ADMIN){
+    adalahAdmin = true;
+    alert("✅ Berhasil masuk Mode Admin!");
+    document.getElementById("kotak_login").style.display = "none";
+    document.getElementById("btn_seting").style.display = "none";
+    document.getElementById("wadah_upload").style.display = "block";
+    tampilkanTombolHapus();
+  }else alert("❌ Sandi salah!");
+}
+
+function tampilkanTombolHapus(){
+  document.querySelectorAll('.tombol_hapus').forEach(btn => {
+    btn.style.display = 'block';
+  });
+}
+
+async function hapusTestimoni(id){
+  if(confirm("⚠️ Yakin mau hapus testimoni ini?")){
+    await db.ref("daftar_testimoni").child(id).remove();
+    alert("✅ Berhasil dihapus!");
+  }
+}
+
+async function uploadSimpan(){
+  if(!adalahAdmin) return alert("❌ Hanya Admin yang bisa kirim!");
+  const teks = document.getElementById("isi_teks").value.trim();
+  const files = document.getElementById("file_gambar").files;
+  const elProgres = document.getElementById("progres_upload");
+  
+  if(!teks && files.length === 0) return alert("Isi pesan atau pilih gambar dulu!");
+  if(files.length > 10) return alert("❌ Maksimal 10 gambar saja!");
+
+  elProgres.style.display = "block";
+  elProgres.textContent = "⏳ Sedang mengirim...";
+  let daftarLink = [];
+
+  try {
+    for(let i = 0; i < files.length; i++){
+      elProgres.textContent = `⏳ Mengirim gambar ${i+1} dari ${files.length}`;
+      const form = new FormData();
+      form.append("image", files[i]);
+      const res = await fetch("https://api.imgur.com/3/image", {
+        method: "POST",
+        headers: { Authorization: "Client-ID 546c25a59c58ad7" },
+        body: form
+      });
+      const data = await res.json();
+      if(!data.success) throw new Error("Gagal upload");
+      daftarLink.push(data.data.link);
+    }
+
+    // ✅ PERBAIKAN: TESTIMONI BARU MULAI HITUNG DARI 0
+    await db.ref("daftar_testimoni").push({
+      nama: "SMG STORE",
+      teks: teks,
+      gambar: daftarLink,
+      waktu: Date.now(),
+      dilihat: 0 // Nilai awal 0 untuk yang baru
+    });
+
+    elProgres.style.display = "none";
+    alert("✅ Berhasil dikirim!");
+    document.getElementById("isi_teks").value = "";
+    document.getElementById("file_gambar").value = "";
+    tampilJumlahGambar();
+    kotakTeks.style.height = 'auto';
+  } catch(e) {
+    elProgres.style.display = "none";
+    alert("❌ Error: " + e.message);
+  }
+}
+
+function bukaGambar(linkSemua, posisi){
+  daftarGambar = linkSemua;
+  posisiSekarang = posisi;
+  document.getElementById("img_besar").src = daftarGambar[posisiSekarang];
+  document.getElementById("info_gambar").textContent = `${posisiSekarang + 1} / ${daftarGambar.length}`;
+  document.getElementById("tampilan_besar").style.display = "block";
+  history.pushState({gambarTerbuka: true}, "");
+}
+
+function tutupGambar(){
+  document.getElementById("tampilan_besar").style.display = "none";
+  if(history.state && history.state.gambarTerbuka) history.back();
+}
+
+window.addEventListener("popstate", function(e) {
+  const tampilan = document.getElementById("tampilan_besar");
+  if(tampilan.style.display === "block"){
+    tampilan.style.display = "none";
+    history.replaceState({}, "");
+  }
+});
+
+const tampilan = document.getElementById("tampilan_besar");
+tampilan.addEventListener("touchstart", e => mulaiX = e.touches[0].clientX);
+tampilan.addEventListener("touchend", e => {
+  const akhirX = e.changedTouches[0].clientX;
+  const beda = akhirX - mulaiX;
+  if(Math.abs(beda) > 25){
+    beda < 0 ? posisiSekarang++ : posisiSekarang--;
+    if(posisiSekarang >= daftarGambar.length) posisiSekarang = 0;
+    if(posisiSekarang < 0) posisiSekarang = daftarGambar.length - 1;
+    document.getElementById("img_besar").src = daftarGambar[posisiSekarang];
+    document.getElementById("info_gambar").textContent = `${posisiSekarang + 1} / ${daftarGambar.length}`;
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if(document.getElementById("tampilan_besar").style.display === "block"){
+    if(e.key === "ArrowLeft") { posisiSekarang--; if(posisiSekarang <0) posisiSekarang = daftarGambar.length-1; }
+    if(e.key === "ArrowRight") { posisiSekarang++; if(posisiSekarang >= daftarGambar.length) posisiSekarang =0; }
+    if(e.key === "Escape" || e.key === "Backspace") { tutupGambar(); e.preventDefault(); return; }
+    document.getElementById("img_besar").src = daftarGambar[posisiSekarang];
+    document.getElementById("info_gambar").textContent = `${posisiSekarang + 1} / ${daftarGambar.length}`;
+  }
+});
+
+// ✅ SISTEM TAMPILAN TETAP CARA ASLI KAMU → SEMUA TESTIMONI PASTI MUNCUL
+function tampilkanSemuaTestimoni(){
+  db.ref("daftar_testimoni").orderByChild("waktu").limitToLast(50).on("value", data => {
+    const wadah = document.getElementById("daftar_pesan");
+    wadah.innerHTML = "";
+    data.forEach(item => {
+      const d = item.val();
+      const idItem = item.key;
+      let jumlahGambar = d.gambar ? d.gambar.length : 0;
+      let daftarLink = d.gambar || [];
+      let kelasJumlah = jumlahGambar === 1 ? "jumlah-1" : jumlahGambar === 2 ? "jumlah-2" : "";
+      let tampilGambar = "";
+      if(jumlahGambar > 0){
+        tampilGambar = `<div class="wadah_gambar ${kelasJumlah}">`;
+        daftarLink.forEach((link, idx) => {
+          tampilGambar += `<img src="${link}" loading="lazy" onclick='bukaGambar(${JSON.stringify(daftarLink)}, ${idx})'>`;
+        });
+        tampilGambar += `</div>`;
+      }
+
+      // ✅ HITUNGAN: LAMA TETAP ANGKA, BARU MULAI 0
+      const kunciLihat = `lihat_${idItem}`;
+      let jumlahLihat = d.dilihat || totalPengunjung; // Jika belum ada nilai, pakai angka umum lama
+      if(!localStorage.getItem(kunciLihat)){
+        localStorage.setItem(kunciLihat, "sudah");
+        db.ref("daftar_testimoni").child(idItem).child("dilihat").transaction(nilai => (nilai || totalPengunjung) + 1);
+        jumlahLihat += 1;
+      }
+
+      wadah.innerHTML += `
+        <div class="pesan">
+          <button class="tombol_hapus" onclick="hapusTestimoni('${idItem}')">🗑️</button>
+          <div class="nama_pengirim">${d.nama || "SMG STORE"}</div>
+          ${tampilGambar}
+          ${d.teks ? `<div class="isi_teks">${d.teks}</div>` : ""}
+          <div class="waktu_upload">
+            <div class="bagian_kiri">👁️ ${jumlahLihat}</div>
+            <span>${formatWaktu(d.waktu)}</span>
+          </div>
+        </div>
+      `;
+    });
+    if(adalahAdmin) tampilkanTombolHapus();
+  });
+}
+</script>
+
+</body>
+</html>

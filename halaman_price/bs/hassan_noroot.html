@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMG STORE - HARGA HASSAN</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: url("./NAMA_FILE_LATAR_KAMU") center/cover no-repeat fixed;
+      min-height: 100vh;
+      padding: 5px 10px 80px;
+    }
+
+    h1 {
+      color: #FFCC00;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 900;
+      margin: 0 0 2px 0;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    h2 {
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 11px;
+      margin-bottom: 10px;
+    }
+
+    .wadah_harga {
+      max-width: 520px;
+      width: 94%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+    .kartu_paket {
+      background: rgba(255,255,255,0.22);
+      border-radius: 6px;
+      padding: 6px 3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .kartu_paket:active { transform: scale(0.97); }
+    .nama_paket { color: #FFFFFF; font-size: 9px; font-weight: bold; margin-bottom: 1px; text-align: center; }
+    .harga { color: #FFCC00; font-size: 12px; font-weight: 900; margin-bottom: 1px; text-align: center; }
+    .durasi { color: #F0F0F0; font-size: 8px; text-align: center; }
+
+    .info_tambahan {
+      max-width: 580px;
+      width: 100%;
+      margin: 12px auto 0;
+      padding: 8px 5px;
+      background: transparent;
+      font-size: 11px;
+      color: #fff;
+      text-align: center;
+      line-height: 1.6;
+      text-shadow: 0 0 2px rgba(0,0,0,0.6);
+    }
+
+    .area_pesan {
+      max-width: 580px;
+      width: 100%;
+      margin: 10px auto 0;
+      padding: 0;
+      background: rgba(20,20,20,0.85);
+      border-radius: 7px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      height: 0;
+      overflow: hidden;
+    }
+    .area_pesan.muncul {
+      opacity: 1;
+      height: auto;
+      padding: 8px 10px;
+      pointer-events: auto;
+    }
+
+    .baris_info { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
+    .icon_paket { width: 32px; height: 32px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+    .icon_paket img { width: 100%; height: 100%; object-fit: cover; }
+    .teks_info { flex: 1; }
+
+    .judul_pilih { color: #FFFFFF; font-size: 11px; font-weight: bold; margin-bottom: 1px; }
+    .harga_pilih { color: #FFCC00; font-size: 12px; font-weight: 900; margin-bottom: 1px; }
+    .catatan_pilih { color: #CCCCCC; font-size: 8px; font-style: italic; }
+
+    .btn_buat_pesanan {
+      width: 100%;
+      padding: 7px;
+      background: #FF7A20;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn_buat_pesanan:active { background: #FF6A00; }
+  </style>
+</head>
+<body>
+
+  <h1>HARGA HASSAN</h1>
+  <h2>No Root</h2>
+
+  <div class="wadah_harga">
+    <div class="kartu_paket" onclick="munculPesan('HASSAN BLOOD STRIKE', 'Rp 50.000/$5', '7 Hari', '../../icon brand/hassan.png')">
+      <div class="nama_paket">No Root</div>
+      <div class="harga">Rp 50.000/$5</div>
+      <div class="durasi">7 Hari</div>
+    </div>
+    <div class="kartu_paket" onclick="munculPesan('HASSAN BLOOD STRIKE', 'Rp 100.000/$10', '14 Hari', '../../icon brand/hassan.png')">
+      <div class="nama_paket">No Root</div>
+      <div class="harga">Rp 100.000/$10</div>
+      <div class="durasi">14 Hari</div>
+    </div>
+    <div class="kartu_paket" onclick="munculPesan('HASSAN BLOOD STRIKE', 'Rp 150.000/$15', '30 Hari', '../../icon brand/hassan.png')">
+      <div class="nama_paket">No Root</div>
+      <div class="harga">Rp 150.000/$15</div>
+      <div class="durasi">30 Hari</div>
+    </div>
+    <div class="kartu_paket" onclick="munculPesan('HASSAN BLOOD STRIKE', 'Rp 250.000/$20', '60 Hari', '../../icon brand/hassan.png')">
+      <div class="nama_paket">No Root</div>
+      <div class="harga">Rp 250.000/$20</div>
+      <div class="durasi">60 Hari</div>
+    </div>
+  </div>
+
+  <div class="info_tambahan">
+    FEATURE :
+    <br>
+    VISUAL ESP MENU : Esp Enable * Player Esp * Boot Line * Esp Skeleton * Esp Name * Esp Alert * Esp Box * Esp Health * Esp Distance * Esp Only Outzone
+    <br>
+    AIMBOOT MENU : Enable Aimboot * Vischeck * Ignore Knock * Drow Fov * Ignore Bot * Aim Line * Magic Bullet * Hide Fov if safe
+    <br>
+    MEMORY MENU : No Recoil * No Spread * XRAY
+  </div>
+
+  <div class="area_pesan" id="areaPilih">
+    <div class="baris_info">
+      <div class="icon_paket"><img id="gambarIcon" src="" alt="Icon"></div>
+      <div class="teks_info">
+        <div id="judulPilih" class="judul_pilih"></div>
+        <div id="hargaPilih" class="harga_pilih"></div>
+        <div id="catatanPilih" class="catatan_pilih"></div>
+      </div>
+    </div>
+    <button class="btn_buat_pesanan" onclick="lanjutPesan()">Buat Pesanan</button>
+  </div>
+
+  <script>
+    let sedangBuka = false;
+    const kotakPesan = document.getElementById('areaPilih');
+    const wadahKartu = document.querySelector('.wadah_harga');
+
+    function munculPesan(nama, harga, durasi, icon) {
+      document.getElementById('gambarIcon').src = icon || "../../icon brand/brmods.png";
+      document.getElementById('judulPilih').textContent = nama;
+      document.getElementById('hargaPilih').textContent = harga;
+      document.getElementById('catatanPilih').textContent = `Durasi: ${durasi} • Proses Instan`;
+      document.getElementById('gambarIcon').src = icon;
+      kotakPesan.classList.add('muncul');
+      sedangBuka = true;
+    }
+
+    document.addEventListener('click', function(e) {
+      if(!sedangBuka) return;
+      if(!kotakPesan.contains(e.target) && !wadahKartu.contains(e.target)){
+        tutupPesan();
+      }
+    });
+
+    function tutupPesan(){
+      kotakPesan.classList.remove('muncul');
+      sedangBuka = false;
+    }
+
+    window.addEventListener('popstate', () => {
+      if(sedangBuka){
+        tutupPesan();
+      }else{
+        window.location.href = "../../paker1.html";
+      }
+    });
+
+    // ✅ LINK & KIRIM DATA SUDAH SESUAI POSISI FILE KAMU
+    function lanjutPesan() {
+  const nama = document.getElementById('judulPilih').textContent.trim();
+  const harga = document.getElementById('hargaPilih').textContent.trim();
+  const durasi = document.getElementById('catatanPilih').textContent.trim(); // ✅ Ambil durasi
+
+  if (!nama || nama === "") {
+    alert("Pilih paket dulu jirr!");
+    return;
+  }
+
+  // ✅ TAMBAH &durasi=... di link biar terbawa
+  const linkTujuan = "../../bayar1.html?paket=" + encodeURIComponent(nama) + "&harga=" + encodeURIComponent(harga) + "&durasi=" + encodeURIComponent(durasi);
+  window.location.href = linkTujuan;
+}
+  </script>
+</body>
+</html>
+
+<!--TOMBOL BAGIAM BAWAH UNTUK SEMUA HALAMAN GAME-->
+
+</style>
+<div style="width:100%; padding:25px 10px; box-sizing:border-box; clear:both;">
+  <img src="../../slider/gbr_atas.PNG" alt="Tarok 1" loading="lazy" style="display:block; max-width:90%; width:700px; margin:15px auto; border-radius:8px;">
+  <img src="../../slider/gbr_tengah.PNG" alt="Tarok 2" loading="lazy" style="display:block; max-width:90%; width:700px; margin:15px auto; border-radius:8px;">
+  <img src="../../slider/gbr_bawah.PNG" alt="Tarok 3" loading="lazy" style="display:block; max-width:90%; width:700px; margin:15px auto; border-radius:8px;">
+</div>
+
+<style>
+.bagian-percaya {
+  width: 92%;
+  max-width: 400px;
+  margin: 15px auto;
+  padding: 10px 8px;
+  background: #0f172a;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.teks-atas {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff9f29;
+  margin: 0 0 5px 0;
+}
+
+.judul-utama {
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  line-height: 1.2;
+}
+
+.deskripsi {
+  font-size: 9px;
+  color: #cbd5e1;
+  margin: 0 0 14px 0;
+  line-height: 1.4;
+}
+
+.baris-statistik {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3px 1px;
+  margin-bottom: 10px;
+}
+
+.item-stat {
+  flex: 1 1 65px;
+  text-align: center;
+  position: relative;
+}
+.item-stat:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 3px;
+  height: 20px;
+  width: 1px;
+  background: rgba(255,255,255,0.2);
+}
+
+.angka-stat {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+}
+
+.label-stat {
+  font-size: 8px;
+  color: #cbd5e1;
+  margin: 2px 0 0 0;
+}
+
+@media (max-width: 360px) {
+  .judul-utama { font-size: 16px; }
+  .angka-stat { font-size: 19px; }
+}
+</style>
+
+<div class="bagian-percaya">
+  <p class="teks-atas">Dipercaya oleh ribuan pengguna</p>
+  <h2 class="judul-utama">SMG Store Dipercaya oleh Para Gamers Profesional</h2>
+  <p class="deskripsi">SMG Store - Agen Reseller Provider Voucher Game Android yang menyediakan Voucher dengan keamanan berkualitas dan terjamin</p>
+
+  <div class="baris-statistik">
+    <div class="item-stat">
+      <p class="angka-stat">4+</p>
+      <p class="label-stat">Pengguna</p>
+    </div>
+    <div class="item-stat">
+      <p class="angka-stat">14+</p>
+      <p class="label-stat">Kategori</p>
+    </div>
+    <div class="item-stat">
+      <p class="angka-stat">25+</p>
+      <p class="label-stat">Produk</p>
+    </div>
+    <div class="item-stat">
+      <p class="angka-stat">1.818.900+</p>
+      <p class="label-stat">Transaksi</p>
+    </div>
+  </div>
+</div>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CATURSTORE.COM - FAQ</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #1a2440;
+  padding: 20px 12px;
+  min-height: 100vh;
+}
+
+/* ==== BAGIAN FOOTER & SOSMED ==== */
+.bagian-footer {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 5px;
+}
+
+.teks-footer {
+  font-size: 13px;
+  color: #e0d2b8;
+  line-height: 1.5;
+  margin: 0 0 22px 0;
+}
+
+.baris-sosmed {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.tombol-sosmed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #ff7b29;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.tombol-sosmed:active {
+  transform: scale(0.95);
+}
+
+.tombol-sosmed img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* PENYESUAIAN KHUSUS HP KECIL */
+@media (max-width: 375px) {
+  body { padding: 15px 10px; }
+  .tombol-sosmed { width: 44px; height: 44px; border-radius: 10px; }
+  .tombol-sosmed img { width: 22px; height: 22px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- BAGIAN SOSMED SAJA -->
+<div class="baris-sosmed" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 22px 0;">
+
+  <a href="https://www.youtube.com/@SMGaming1689/videos" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: #ff7b29; border-radius: 12px; text-decoration: none;">
+    <img src="../../slider/yutube.PNG" width="24" height="24" alt="YouTube" style="object-fit: contain;">
+  </a>
+
+  <a href="https://wa.me/6281365013694" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: #ff7b29; border-radius: 12px; text-decoration: none;">
+    <img src="../../slider/wa.PNG" width="24" height="24" alt="WhatsApp" style="object-fit: contain;">
+  </a>
+
+  <a href="https://t.me/ST_MD_Hasan" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: #ff7b29; border-radius: 12px; text-decoration: none;">
+    <img src="../../slider/telegram.PNG" width="24" height="24" alt="Telegram" style="object-fit: contain;">
+  </a>
+
+  <a href="https://www.tiktok.com/@smgaming1689" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: #ff7b29; border-radius: 12px; text-decoration: none;">
+    <img src="../../slider/tiktok.png" width="24" height="24" alt="TikTok" style="object-fit: contain;">
+  </a>
+
+</div>
+
+<script>
+function bukaTutupFaq(elemen) {
+  const jawab = elemen.querySelector('.jawab-faq');
+  jawab.classList.toggle('buka');
+}
+
+
+</script>
+<div style="text-align: center; padding: 10px 10px 20px 10px;">
+  <!-- TULISAN HOME DI ATAS -->
+  <a href="../../index.html" style="color:#ff7b29; font-size:14px; font-weight:400; text-decoration:none;">Home</a>
+  </a>
+  <br>
+  <!-- TULISAN HAK CIPTA DI BAWAH -->
+  <span style="font-size: 11px; color: #e0d2b8;">
+    Copyright © 2026 SMG STORE - Semua Hak Dilindungi.
+  </span>
+</div>
+
+</body>
+</html>

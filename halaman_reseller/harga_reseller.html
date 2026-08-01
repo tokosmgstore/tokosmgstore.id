@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAFTAR HARGA RESELLER SMG STORE</title>
+<style>
+* {box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif;}
+body {
+  background: #1a2440;
+  color: #ffffff;
+  padding: 20px 15px;
+  min-height: 100vh;
+}
+
+.wadah {
+  max-width: 850px;
+  margin: 0 auto;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.keterangan {
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 18px;
+  background: rgba(255, 204, 0, 0.1);
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+}
+.keterangan h2 {
+  color: #ffcc00;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.keterangan p {
+  font-size: 14px;
+  color: #eeeeee;
+  line-height: 1.6;
+}
+
+.daftar-game {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+.tombol-game {
+  flex: 1 1 160px;
+  padding: 14px 10px;
+  text-align: center;
+  background: linear-gradient(180deg, #ffd54f, #ffb300);
+  color: #000000;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+.tombol-game:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.3);
+}
+.tombol-game:active {
+  transform: scale(0.97);
+}
+
+.info-bawah {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #cccccc;
+}
+.info-bawah strong {color: #ffcc00;}
+</style>
+</head>
+<body>
+
+<div class="wadah">
+  <div class="keterangan">
+    <h2>🔰 SELAMAT DATANG AREA RESELLER</h2>
+    <p>Silakan pilih game untuk melihat daftar harga khusus mitra SMG Store<br>Semua harga sudah disesuaikan untuk keuntungan kamu</p>
+  </div>
+
+  <h3 style="color:#ffcc00; margin-bottom:15px; font-size:18px;">🎮 PILIH DAFTAR HARGA</h3>
+  <div class="daftar-game">
+    <!-- LINK SESUAI NAMA FILE DI FOLDER KAMU -->
+    <a href="harga_mlbb.html" class="tombol-game">Mobile Legends</a>
+    <a href="harga_ff.html" class="tombol-game">Free Fire</a>
+    <a href="harga_pubg.html" class="tombol-game">PUBG Mobile</a>
+    <a href="harga_bs.html" class="tombol-game">Blood Strike</a>
+    <a href="harga_cfl.html" class="tombol-game">Crossfire Legends</a>
+    <a href="harga_codm.html" class="tombol-game">CODM</a>
+    <a href="harga_df.html" class="tombol-game">Delta Force</a>
+    <a href="harga_pb.html" class="tombol-game">Point Blank</a>
+  </div>
+
+  <div class="info-bawah">
+    <p>⚠️ Dilarang menyebarkan harga ini ke orang yang bukan mitra reseller</p>
+    <p>Hubungi <strong>Admin SMG Store</strong> jika ada kesalahan harga atau kendala</p>
+  </div>
+</div>
+
+<!-- PASTIKAN SUDAH ADA 2 BARIS INI DI ATAS, JIKA BELUM ADA TAMBAHKAN DI ATAS SCRIPT INI -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const config = {
+  apiKey: "AIzaSyB4-Z-Eto-ZEWgSFALDeGfG1qQr0MHI",
+  authDomain: "smg-store-ef660.firebaseapp.com",
+  databaseURL: "https://smg-store-ef660-default-rtdb.firebaseio.com",
+  projectId: "smg-store-ef660",
+  storageBucket: "smg-store-ef660.appspot.com",
+  messagingSenderId: "61740593036",
+  appId: "1:61740593036:web:beb8903712c2c3750e89421"
+};
+
+// INISIALISASI FIREBASE HANYA SEKALI
+if (!firebase.apps.length) firebase.initializeApp(config);
+const db = firebase.database();
+
+// BUAT ID PERANGKIT SAMA PERSIS DENGAN HALAMAN LOGIN
+const ID_PERANGKIT = (() => {
+  let nav = navigator.userAgent + screen.width + screen.height + new Date().getTimezoneOffset();
+  let hash = 0;
+  for(let i=0; i<nav.length; i++) hash = ((hash << 5) - hash) + nav.charCodeAt(i), hash |= 0;
+  return 'dev_' + Math.abs(hash).toString(16);
+})();
+
+const kunciSaya = localStorage.getItem("kunciAkses");
+const HALAMAN_LOGIN = "halaman_login.html"; // SESUAIKAN NAMA FILE JIKA BERBEDA
+
+// === CEK SAAT HALAMAN BARU DIBUKA / DI REFRESH ===
+async function cekSaatMuat() {
+  if(!kunciSaya) {
+    localStorage.clear();
+    alert("🔐 Silakan login dulu!");
+    window.location.replace(HALAMAN_LOGIN);
+    return false;
+  }
+
+  const cek = await db.ref("kunci_reseller").orderByChild("sandi").equalTo(kunciSaya).once("value");
+  
+  if(!cek.exists()) {
+    localStorage.clear();
+    alert("❌ AKSES DICABUT!\nKunci sudah dihapus Admin.");
+    window.location.replace(HALAMAN_LOGIN);
+    return false;
+  }
+
+  let dataKunci = null;
+  cek.forEach(item => dataKunci = item.val());
+
+  // KALAU SUDAH DIRESET ATAU DIPAKAI HP LAIN
+  if(!dataKunci.id_perangkat || dataKunci.id_perangkat !== ID_PERANGKIT) {
+    localStorage.clear();
+    alert("⚠️ KUNCI SUDAH DIRESET!\nPerangkat ini sudah tidak diizinkan.\nSilakan login ulang di HP baru.");
+    window.location.replace(HALAMAN_LOGIN);
+    return false;
+  }
+
+  return true;
+}
+
+// === CEK OTOMATIS SETIAP ADA PERUBAHAN DI FIREBASE ===
+function pantauPerubahan() {
+  if(!kunciSaya) return;
+  
+  db.ref("kunci_reseller").orderByChild("sandi").equalTo(kunciSaya).on("value", snap => {
+    if(!snap.exists()) {
+      localStorage.clear();
+      alert("❌ AKSES DICABUT!\nKunci sudah dihapus Admin.");
+      window.location.replace(HALAMAN_LOGIN);
+      return;
+    }
+
+    snap.forEach(item => {
+      const data = item.val();
+      if(!data.id_perangkat || data.id_perangkat !== ID_PERANGKIT) {
+        localStorage.clear();
+        alert("⚠️ KUNCI SUDAH DIRESET!\nPerangkat ini sudah tidak diizinkan.\nSilakan login ulang di HP baru.");
+        window.location.replace(HALAMAN_LOGIN);
+      }
+    });
+  });
+}
+
+// JALANKAN SEMUA
+cekSaatMuat().then(ok => {
+  if(ok) pantauPerubahan();
+});
+</script>
+</body>
+</html>

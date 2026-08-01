@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pembayaran Diskon - SMG STORE</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+html {scroll-behavior: smooth;}
+body {
+  background:#5538B2;
+  min-height:100vh;
+  padding:15px 8px;
+  color:#fff;
+  font-size:12px;
+}
+
+.judul {text-align:center; margin-bottom:15px;}
+.judul h2 {font-size:17px; margin-bottom:4px;}
+.judul p {font-size:11px; color:#ddd;}
+
+.kotak-detail {
+  max-width:350px;
+  margin:0 auto 15px auto;
+  background:rgba(255,255,255,0.05);
+  border-radius:7px;
+  padding:12px 10px;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.kotak-detail h3 {font-size:13px; margin-bottom:8px; color:#ffeb3b;}
+.baris {display:flex; justify-content:space-between; padding:5px 0; font-size:11px; border-bottom:1px solid rgba(255,255,255,0.1);}
+.baris:last-child {border-bottom:none; font-weight:bold; font-size:12px;}
+.harga-normal {text-decoration:line-through; color:#ff8888;}
+.harga-diskon {color:#22c55e; font-weight:bold;}
+
+.metode {margin-bottom:15px;}
+.metode h3 {font-size:13px; margin-bottom:8px; text-align:center;}
+.pilihan-metode {
+  max-width:350px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.pilihan {
+  background:rgba(255,255,255,0.05);
+  border:2px solid transparent;
+  border-radius:6px;
+  padding:14px 12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-size:14px;
+  font-weight:600;
+}
+.pilihan.aktif {border-color:#ffeb3b; background:rgba(255,235,59,0.12);}
+.pilihan img {
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  flex-shrink:0;
+}
+
+.kotak-info {
+  max-width:350px;
+  margin:6px auto 12px auto;
+  background:rgba(255,255,255,0.05);
+  border-radius:7px;
+  padding:15px 10px;
+  border:1px solid rgba(255,255,255,0.15);
+  display:none;
+  text-align:center;
+}
+.kotak-info.lihat {display:block;}
+
+/* ✅ IKON DI DALAM KOTAK INFO JADI 200px */
+.kotak-info .logo-bank {
+  width:200px;
+  height:200px;
+  object-fit:contain;
+  display:block;
+  margin:10px auto;
+}
+
+.kotak-info p {
+  font-size:13px;
+  margin:8px 0;
+  color:#fff;
+}
+.kotak-info p strong {color:#ffeb3b;}
+
+.kotak-info img.qris-gambar {
+  max-width:100%;
+  max-height:200px;
+  border-radius:5px;
+  margin:10px auto;
+  display:block;
+  object-fit:contain;
+}
+
+.tombol-bayar {
+  width:100%;
+  padding:10px;
+  background:#22c55e;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:13px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:8px;
+}
+.tombol-salin {
+  width:100%;
+  padding:8px;
+  background:#ff9800;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:6px;
+}
+.tombol-bayar:active, .tombol-salin:active {transform:scale(0.97);}
+
+.info {text-align:center; font-size:10px; color:#aaa; margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="judul">
+  <h2>📑 PEMBAYARAN</h2>
+  <p>Silakan cek detail pesanan kamu</p>
+</div>
+
+<div class="kotak-detail">
+  <h3>📦 DETAIL PESANAN</h3>
+  <div class="baris">
+    <span>Nama Barang</span>
+    <span id="namaBarang">-</span>
+  </div>
+  <div class="baris">
+    <span>Durasi</span>
+    <span id="durasiBarang">-</span>
+  </div>
+  <div class="baris">
+    <span>Harga Normal</span>
+    <span id="hargaNormal" class="harga-normal">-</span>
+  </div>
+  <div class="baris">
+    <span>Harga Diskon</span>
+    <span id="hargaDiskon" class="harga-diskon">-</span>
+  </div>
+</div>
+
+<div class="metode">
+  <h3>💳 PILIH CARA BAYAR</h3>
+  <div class="pilihan-metode">
+    <div class="pilihan" data-id="qris">
+      <img src="../halaman_reseller/ikon_pembayaran/qris_smg.PNG" alt="QRIS">
+      <span>QRIS Semua Aplikasi</span>
+    </div>
+    <div class="kotak-info" id="info-qris">
+      <p><strong>Scan QRIS Berikut:</strong></p>
+      <img src="../halaman_reseller/ikon_pembayaran/qris_smg.PNG" class="qris-gambar" alt="QRIS Pembayaran">
+      <p>Atau simpan gambar lalu scan di aplikasi pembayaran</p>
+      <button class="tombol-salin" onclick="window.open('qris_besar.html', '_blank')">🔍 Perbesar & Simpan QRIS</button>
+      <button class="tombol-bayar" onclick="lanjutKeHalaman()">✅ SUDAH BAYAR</button>
+    </div>
+
+    <div class="pilihan" data-id="dana">
+      <img src="../halaman_reseller/ikon_pembayaran/dana_kamu.png" alt="Dana">
+      <span>Dana</span>
+    </div>
+    <div class="kotak-info" id="info-dana">
+      <p><strong>Nomor Dana:</strong></p>
+      <!-- ✅ IKON DI ATAS -->
+      <img src="../halaman_reseller/ikon_pembayaran/dana_kamu.png" class="logo-bank" alt="Dana">
+      <!-- ✅ NOMOR DI BAWAH IKON -->
+      <p>083861606769 a.n MELDANIATI</p>
+      <button class="tombol-salin" onclick="navigator.clipboard.writeText('083861606769').then(()=>alert('Nomor disalin!'))">📋 Salin Nomor</button>
+      <button class="tombol-bayar" onclick="lanjutKeHalaman()">✅ SUDAH BAYAR</button>
+    </div>
+
+    <div class="pilihan" data-id="shopeepay">
+      <img src="../halaman_reseller/ikon_pembayaran/shopeepay_kamu.PNG" alt="ShopeePay">
+      <span>ShopeePay</span>
+    </div>
+    <div class="kotak-info" id="info-shopeepay">
+      <p><strong>Nomor ShopeePay:</strong></p>
+      <img src="../halaman_reseller/ikon_pembayaran/shopeepay_kamu.PNG" class="logo-bank" alt="ShopeePay">
+      <p>085172372605 a.n ASAN BASRI</p>
+      <button class="tombol-salin" onclick="navigator.clipboard.writeText('085172372605').then(()=>alert('Nomor disalin!'))">📋 Salin Nomor</button>
+      <button class="tombol-bayar" onclick="lanjutKeHalaman()">✅ SUDAH BAYAR</button>
+    </div>
+
+    <div class="pilihan" data-id="seabank">
+      <img src="../halaman_reseller/ikon_pembayaran/seabank_kamu.png" alt="SeaBank">
+      <span>SeaBank</span>
+    </div>
+    <div class="kotak-info" id="info-seabank">
+      <p><strong>Rekening SeaBank:</strong></p>
+      <img src="../halaman_reseller/ikon_pembayaran/seabank_kamu.png" class="logo-bank" alt="SeaBank">
+      <p>901462231296 a.n ASAN BASRI</p>
+      <button class="tombol-salin" onclick="navigator.clipboard.writeText('901462231296').then(()=>alert('Nomor disalin!'))">📋 Salin Nomor</button>
+      <button class="tombol-bayar" onclick="lanjutKeHalaman()">✅ SUDAH BAYAR</button>
+    </div>
+
+    <div class="pilihan" data-id="binance">
+      <img src="../halaman_reseller/ikon_pembayaran/binance_kamu.PNG" alt="Binance">
+      <span>Binance</span>
+    </div>
+    <div class="kotak-info" id="info-binance">
+      <p><strong>ID Binance:</strong></p>
+      <img src="../halaman_reseller/ikon_pembayaran/binance_kamu.PNG" class="logo-bank" alt="Binance">
+      <p>275182393</p>
+      <button class="tombol-salin" onclick="navigator.clipboard.writeText('275182393').then(()=>alert('Alamat disalin!'))">📋 Salin Alamat</button>
+      <button class="tombol-bayar" onclick="lanjutKeHalaman()">✅ SUDAH BAYAR</button>
+    </div>
+  </div>
+</div>
+
+<div class="info">Pastikan nominal bayar sesuai total pesanan</div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const nama = urlParams.get('nama') || '-';
+const durasi = urlParams.get('durasi') || '-';
+const hargaNormal = urlParams.get('normal') || '-';
+const hargaDiskon = urlParams.get('diskon') || '-';
+
+document.getElementById('namaBarang').textContent = nama;
+document.getElementById('durasiBarang').textContent = durasi;
+document.getElementById('hargaNormal').textContent = hargaNormal;
+document.getElementById('hargaDiskon').textContent = hargaDiskon;
+
+function tutupSemua() {
+  document.querySelectorAll('.pilihan').forEach(p => p.classList.remove('aktif'));
+  document.querySelectorAll('.kotak-info').forEach(k => k.classList.remove('lihat'));
+}
+
+document.querySelectorAll('.pilihan').forEach(pil => {
+  pil.addEventListener('click', (e) => {
+    e.stopPropagation();
+    tutupSemua();
+    pil.classList.add('aktif');
+    document.getElementById(`info-${pil.dataset.id}`).classList.add('lihat');
+  });
+});
+
+document.querySelectorAll('.kotak-info').forEach(info => {
+  info.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+});
+
+document.addEventListener('click', () => {
+  tutupSemua();
+});
+
+function lanjutKeHalaman(){
+  const aktif = document.querySelector('.pilihan.aktif');
+  const namaMetode = aktif ? aktif.textContent.trim() : 'QRIS';
+  window.location.href = `konfirmasi_pesanan.html?nama=${encodeURIComponent(nama)}&durasi=${encodeURIComponent(durasi)}&normal=${encodeURIComponent(hargaNormal)}&diskon=${encodeURIComponent(hargaDiskon)}&metode=${encodeURIComponent(namaMetode)}`;
+}
+</script>
+
+</body>
+</html>

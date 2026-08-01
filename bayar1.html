@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pembayaran</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif;}
+html {scroll-behavior: smooth;}
+
+/* ✅ LATAR BELAKANG BARU: HITAM EMAS ELEGAN */
+body {
+  min-height:100vh;
+  padding:20px 0;
+  color:#fff;
+  background: radial-gradient(circle at top, #2C2C2C 0%, #121212 60%, #000000 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Efek garis cahaya emas bergerak */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
+  animation: sorot 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes sorot {
+  0% {left: -100%;}
+  100% {left: 100%;}
+}
+
+/* Efek partikel bintang emas */
+.bintang {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: #FFD700;
+  border-radius: 50%;
+  animation: kedip 3s infinite ease-in-out;
+  pointer-events: none;
+}
+@keyframes kedip {
+  0%,100% {opacity:0; transform:scale(0);}
+  50% {opacity:1; transform:scale(1);}
+}
+
+.judul {text-align:center; margin-bottom:25px; padding:0 10px; position:relative; z-index:1;}
+.judul h2 {
+  font-size:26px;
+  margin-bottom:6px;
+  font-weight:900;
+  background: linear-gradient(90deg, #FFD700, #FFF8DC, #FFD700);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: teksCahaya 2.5s linear infinite;
+}
+@keyframes teksCahaya {to{background-position:200% center;}}
+.judul p {font-size:14px; color:#CCCCCC;}
+
+.info {
+  background: rgba(255,255,255,0.05);
+  border-radius:16px;
+  padding:18px;
+  margin:0 auto 20px auto;
+  max-width:350px;
+  position:relative; z-index:1;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,215,0,0.2);
+  box-shadow: 0 0 25px rgba(255,215,0,0.1), inset 0 0 15px rgba(255,215,0,0.05);
+  transition: all 0.3s ease;
+}
+.info:hover {transform: translateY(-3px); box-shadow: 0 0 35px rgba(255,215,0,0.2);}
+.info h3 {font-size:18px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.25); color:#FFD700;}
+.baris {display:flex; justify-content:space-between; padding:7px 0; font-size:15px; color:#E0E0E0;}
+.total {margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,215,0,0.4); font-weight:bold; font-size:18px; color:#FFD700;}
+
+.tombol-bayar {
+  width:100%;
+  margin:6px 0;
+  padding:11px 12px;
+  border:none;
+  border-radius:10px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05));
+  color:#FFD700;
+  font-size:14px; font-weight:600;
+  cursor:pointer;
+  display:flex; align-items:center; gap:10px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,215,0,0.25);
+  position:relative; z-index:1;
+}
+.tombol-bayar:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(255,215,0,0.25), rgba(255,215,0,0.1));
+  box-shadow: 0 0 20px rgba(255,215,0,0.3);
+}
+.tombol-bayar.aktif {
+  background: linear-gradient(135deg, #FFD700, #FFB700);
+  color:#000;
+  font-weight:bold;
+  border-color: #FFD700;
+  box-shadow: 0 0 30px rgba(255,215,0,0.5);
+}
+.logo-tombol {width:40px; height:28px; object-fit:contain; flex-shrink:0; border-radius:4px;}
+
+.kotak-detail-bawah {
+  margin:0 auto 12px auto;
+  padding:12px;
+  background: rgba(255,255,255,0.05);
+  border-radius:12px;
+  display:none;
+  max-width:350px;
+  position:relative; z-index:1;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,215,0,0.2);
+  animation: munculGeser 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes munculGeser {
+  from {opacity:0; transform: translateY(20px) scale(0.9);}
+  to {opacity:1; transform: translateY(0) scale(1);}
+}
+.kotak-detail-bawah h6 {margin:0 0 8px 0; color:#FFD700; font-size:14px; font-weight:bold;}
+.kotak-detail-bawah .gambar {max-width:160px; border-radius:8px; margin:0 auto; display:block; background:#fff; box-shadow:0 0 20px rgba(255,215,0,0.2);}
+.kotak-detail-bawah .keterangan {text-align:center; color:#CCCCCC; margin:8px 0; font-size:12px;}
+.kotak-detail-bawah .wadah-nomor {padding:10px; background:rgba(255,215,0,0.08); border-radius:8px; margin-top:8px; border:1px dashed rgba(255,215,0,0.3);}
+.kotak-detail-bawah .wadah-nomor p {margin:0; font-size:12px; color:#AAAAAA;}
+.kotak-detail-bawah .wadah-nomor h5 {margin:4px 0; color:#FFD700; font-size:17px; font-weight:bold; letter-spacing:1px;}
+
+.tombol-kecil {padding:8px 14px; margin:6px 4px; border:none; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer; text-decoration:none; display:inline-block; transition:0.3s; border:1px solid rgba(255,215,0,0.3);}
+.salin {background: linear-gradient(135deg, #FFD700, #FFB700); color:#000;}
+.perbesar {background: linear-gradient(135deg, #FFA500, #FF8C00); color:#fff;}
+.simpan {background: linear-gradient(135deg, #228B22, #006400); color:#fff;}
+.tombol-kecil:hover {transform: translateY(-1px); box-shadow:0 0 15px rgba(255,215,0,0.4);}
+
+.tombol-sudah-bayar {
+  width:80%; margin:10px auto 0; padding:9px; border:none; border-radius:8px;
+  background: linear-gradient(135deg, #FFD700, #FFB700); color:#000; font-weight:bold; font-size:13px;
+  cursor:pointer; display:block; transition:0.3s; border:1px solid #FFD700;
+  box-shadow:0 0 20px rgba(255,215,0,0.4);
+}
+.tombol-sudah-bayar:hover {transform: translateY(-2px) scale(1.03); box-shadow:0 0 35px rgba(255,215,0,0.6);}
+
+#wadah_semua {max-width:350px; margin:0 auto; padding:0; position:relative; z-index:1;}
+</style>
+</head>
+<body>
+
+<!-- Partikel bintang otomatis -->
+<script>
+for(let i=0; i<15; i++){
+  let b = document.createElement('div');
+  b.className = 'bintang';
+  b.style.left = Math.random()*100+'%';
+  b.style.top = Math.random()*100+'%';
+  b.style.animationDelay = Math.random()*3+'s';
+  document.body.appendChild(b);
+}
+</script>
+
+<div class="judul">
+  <h2>💳 PEMBAYARAN</h2>
+  <p>Lengkapi pembayaran sesuai pilihan di bawah</p>
+</div>
+
+<div class="info">
+  <h3>📦 Rincian Pesanan</h3>
+  <div class="baris"><span>NAMA BARANG</span><span id="nama_paket"></span></div>
+  <div class="baris"><span>Harga Normal</span><span id="harga_lama" style="text-decoration:line-through;"></span></div>
+  <div class="baris"><span>Durasi</span><span id="durasi_paket"></span></div>
+  <div class="baris total"><span>TOTAL BAYAR</span><span id="total_bayar"></span></div>
+</div>
+
+<div id="wadah_semua">
+  <button onclick="pilihMetode('qris')" class="tombol-bayar" id="btn-qris">
+    <img src="halaman_reseller/ikon_pembayaran/qris_smg.PNG" class="logo-tombol" alt="QRIS">
+    <span>QRIS Semua Bank/Dompet</span>
+  </button>
+  <div class="kotak-detail-bawah" id="detail-qris"></div>
+
+  <button onclick="pilihMetode('gopay')" class="tombol-bayar" id="btn-gopay">
+    <img src="halaman_reseller/ikon_pembayaran/dana_kamu.png" class="logo-tombol" alt="DANA">
+    <span>DANA</span>
+  </button>
+  <div class="kotak-detail-bawah" id="detail-gopay"></div>
+
+  <button onclick="pilihMetode('dana')" class="tombol-bayar" id="btn-dana">
+    <img src="halaman_reseller/ikon_pembayaran/seabank_kamu.png" class="logo-tombol" alt="Sea Bank">
+    <span>Sea Bank</span>
+  </button>
+  <div class="kotak-detail-bawah" id="detail-dana"></div>
+
+  <button onclick="pilihMetode('seabank')" class="tombol-bayar" id="btn-seabank">
+    <img src="halaman_reseller/ikon_pembayaran/shopeepay_kamu.PNG" class="logo-tombol" alt="ShopeePay">
+    <span>ShopeePay</span>
+  </button>
+  <div class="kotak-detail-bawah" id="detail-seabank"></div>
+
+  <button onclick="pilihMetode('bca')" class="tombol-bayar" id="btn-bca">
+    <img src="halaman_reseller/ikon_pembayaran/binance_kamu.PNG" class="logo-tombol" alt="Binance">
+    <span>Binance</span>
+  </button>
+  <div class="kotak-detail-bawah" id="detail-bca"></div>
+</div>
+
+<script>
+const dataMetode = {
+  qris: {judul:"Scan QRIS Berikut", gambar:"halaman_reseller/ikon_pembayaran/qris_smg.png", keterangan:"Bisa untuk semua Bank & E-Wallet", nomor:"", atasNama:""},
+  gopay: {judul:"Pembayaran Dana", gambar:"halaman_reseller/ikon_pembayaran/dana_kamu.png", keterangan:"Pastikan Nama Penerima sudah benar", nomor:"083861606769", atasNama:"MELDANIATI"},
+  dana: {judul:"Pembayaran Sea Bank", gambar:"halaman_reseller/ikon_pembayaran/seabank_kamu.png", keterangan:"Pastikan Nama Penerima sudah benar", nomor:"901462231296", atasNama:"ASAN BASRI"},
+  seabank: {judul:"Transfer ShoopePay", gambar:"halaman_reseller/ikon_pembayaran/shopeepay_kamu.png", keterangan:"Pastikan Nama Penerima sudah benar", nomor:"085172372605", atasNama:"ASAN BASRI"},
+  bca: {judul:"Transfer Binance", gambar:"halaman_reseller/ikon_pembayaran/binance_kamu.png", keterangan:"Pastikan ID Penerima sudah benar", nomor:"275182393", atasNama:"MELDANIATI"}
+};
+
+let DATA_PESANAN = {};
+document.addEventListener("DOMContentLoaded", function(){
+  const ambil = new URLSearchParams(window.location.search);
+  DATA_PESANAN = {paket: ambil.get("paket")||"Tidak Diketahui", harga: ambil.get("harga")||"Rp 0", durasi: ambil.get("durasi")||"-"};
+  document.getElementById("nama_paket").textContent = DATA_PESANAN.paket;
+  document.getElementById("harga_lama").textContent = DATA_PESANAN.harga;
+  document.getElementById("durasi_paket").textContent = DATA_PESANAN.durasi;
+  document.getElementById("total_bayar").textContent = DATA_PESANAN.harga;
+});
+
+function hapusSemua() {
+  document.querySelectorAll('.tombol-bayar').forEach(b => b.classList.remove('aktif'));
+  document.querySelectorAll('.kotak-detail-bawah').forEach(k => {k.style.display='none'; k.innerHTML=''});
+}
+function salinNomor(no){navigator.clipboard.writeText(no).then(()=>alert("✅ Nomor disalin!"));}
+
+function pilihMetode(jenis){
+  const data = dataMetode[jenis];
+  if(!data) return alert("Belum tersedia jirr!");
+  hapusSemua();
+  document.getElementById(`btn-${jenis}`).classList.add('aktif');
+
+  const kotak = document.getElementById(`detail-${jenis}`);
+  let isi = `<h6>${data.judul}</h6><img src="${data.gambar}" class="gambar">`;
+  
+  if(jenis==='qris'){
+    isi += `<div style="text-align:center;margin:8px 0;"><a href="${data.gambar}" target="_blank" class="tombol-kecil perbesar">🔍 PERBESAR</a><a href="${data.gambar}" download class="tombol-kecil simpan">💾 SIMPAN</a></div>`;
+  }else{
+    isi += `<p class="keterangan">${data.keterangan}</p>
+    <div class="wadah-nomor">
+      <p>Nomor Tujuan:</p><h5>${data.nomor}</h5><p>Atas Nama: ${data.atasNama}</p>
+      <button class="tombol-kecil salin" onclick="salinNomor('${data.nomor}')">📋 SALIN NOMOR</button>
+    </div>`;
+  }
+
+  isi += `<button class="tombol-sudah-bayar" onclick="kirimKeWA()">✅ Sudah Bayar</button>`;
+
+  kotak.innerHTML = isi;
+  kotak.style.display = 'block';
+}
+
+function kirimKeWA() {
+  // ✅ AMBIL NAMA GAME YANG SUDAH DISIMPAN OTOMATIS DARI HALAMAN DEPAN
+  const namaGame = localStorage.getItem("NAMA_GAME_SMG_STORE") || "Game";
+
+  // AMBIL DATA LAINNYA
+  const namaBarang = DATA_PESANAN.paket || "-";
+  const durasi = DATA_PESANAN.durasi || "-";
+  const totalBayar = DATA_PESANAN.harga || "-";
+  const metodeBayar = document.querySelector(".tombol-bayar.aktif")?.textContent || "QRIS Semua Aplikasi";
+
+  // KIRIM KE HALAMAN KONFIRMASI
+  window.location.href = `kirim_bukti.html?game=${encodeURIComponent(namaGame)}&barang=${encodeURIComponent(namaBarang)}&durasi=${encodeURIComponent(durasi)}&metode_bayar=${encodeURIComponent(metodeBayar)}&total_bayar=${encodeURIComponent(totalBayar)}`;
+}
+
+// ✅ PERBAIKAN UTAMA: KLIK DI LUAR BARU HILANG, KLIK DI DALAM AMAN
+document.addEventListener('click', function(e) {
+  const semuaKotak = document.querySelectorAll('.kotak-detail-bawah');
+  const semuaTombol = document.querySelectorAll('.tombol-bayar');
+
+  // JIKA KLIK DI TOMBOL PILIH BAYAR ATAU DI DALAM KOTAK YANG MUNCUL → JANGAN HILANGKAN
+  let diDalam = false;
+  semuaTombol.forEach(t => { if(t.contains(e.target)) diDalam = true; });
+  semuaKotak.forEach(k => { if(k.contains(e.target)) diDalam = true; });
+
+  if(diDalam) return;
+
+  // JIKA KLIK DI LUAR SEMUA → BARU HILANGKAN
+  semuaKotak.forEach(k => k.style.display = 'none');
+  semuaTombol.forEach(t => t.classList.remove('aktif'));
+});
+</script>
+</body>
+</html>
