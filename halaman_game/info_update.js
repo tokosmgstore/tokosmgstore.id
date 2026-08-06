@@ -1,7 +1,7 @@
 // ✅ FORMAT: "NAMA BARANG|ID HALAMAN"
 const DAFTAR = [
   // FREE FIRE
-  "BR MODS|ff",
+  "|ff",
   "LK TEAM|ff",
   "|ff",
   "PATO TEAM|ff",
